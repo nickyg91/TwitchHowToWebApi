@@ -9,4 +9,5 @@ public class FruitModel
     public int BasketFruitId { get; set; }
     public FruitType FruitType { get; set; }
     public Shape FruitShape { get; set; }
+    public int Amount { get; set; }
 }

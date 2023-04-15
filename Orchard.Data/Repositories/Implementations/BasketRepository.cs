@@ -32,4 +32,40 @@ public class BasketRepository : IBasketRepository
         _ctx.Baskets.Remove(basketToDelete);
         return await _ctx.SaveChangesAsync() > 0;
     }
+
+    public async Task<bool> UpdateBasket(Basket basket)
+    {
+        _ctx.Baskets.Update(basket);
+        return await _ctx.SaveChangesAsync() > 0;
+    }
+
+    public async Task<List<Basket>> GetAllBaskets(bool includeFruit)
+    {
+        if (!includeFruit)
+        {
+            return await _ctx
+                .Baskets
+                .ToListAsync();
+        }
+
+        return await _ctx.Baskets
+            .Include(x => x.Fruit)
+            .ThenInclude(x => x.Fruit)
+            .ToListAsync();
+    }
+
+    public async Task<Basket?> GetBasketById(int id, bool includeFruit)
+    {
+        if (!includeFruit)
+        {
+            return await _ctx
+                .Baskets
+                .SingleOrDefaultAsync(x => x.Id == id);
+        }
+
+        return await _ctx.Baskets
+            .Include(x => x.Fruit)
+            .ThenInclude(x => x.Fruit)
+            .SingleOrDefaultAsync(x => x.Id == id);
+    }
 }

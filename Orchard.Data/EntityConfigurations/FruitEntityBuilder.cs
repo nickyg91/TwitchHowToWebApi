@@ -8,7 +8,7 @@ public class FruitEntityBuilder : IEntityTypeConfiguration<Fruit>
 {
     public void Configure(EntityTypeBuilder<Fruit> builder)
     {
-        builder.ToTable("fruits");
+        builder.ToTable("fruit");
         builder.HasKey(x => x.Id).HasName("pk_fruit_id");
         builder.Property(x => x.Id).IsRequired().HasColumnName("id").UseIdentityColumn();
         builder.Property(x => x.FruitShape).IsRequired().HasColumnName("fruit_shape");

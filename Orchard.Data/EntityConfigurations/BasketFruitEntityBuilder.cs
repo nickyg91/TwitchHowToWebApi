@@ -14,7 +14,10 @@ public class BasketFruitEntityBuilder : IEntityTypeConfiguration<BasketFruit>
         builder.Property(x => x.Amount).IsRequired().HasColumnName("amount");
         builder.Property(x => x.FruitId).IsRequired().HasColumnName("fruit_id");
         builder.Property(x => x.BasketId).IsRequired().HasColumnName("basket_id");
-
-        builder.HasOne(x => x.Basket).WithMany(x => x.Fruit).HasForeignKey("fk_basket_fruit");
+        builder.HasOne(x => x.Basket)
+            .WithMany(x => x.Fruit)
+            .HasForeignKey(x => x.BasketId)
+            .HasConstraintName("fk_basket_basket_fruit")
+            .IsRequired();
     }
 }

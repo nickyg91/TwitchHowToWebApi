@@ -1,3 +1,4 @@
+using AutoMapper.EquivalencyExpression;
 using Microsoft.EntityFrameworkCore;
 using Orchard.Data.Contexts;
 using Orchard.Data.Repositories.Implementations;
@@ -16,6 +17,11 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<OrchardDbContext>(optionsAction =>
 {
+    if (builder.Environment.IsDevelopment())
+    {
+        optionsAction.EnableDetailedErrors();
+        optionsAction.EnableSensitiveDataLogging();
+    }
     optionsAction.UseNpgsql(connectionString, builder =>
     {
         builder.MigrationsAssembly("Orchard.Web");
@@ -23,9 +29,13 @@ builder.Services.AddDbContext<OrchardDbContext>(optionsAction =>
 });
 
 builder.Services.AddScoped<IFruitRepository, FruitRepository>();
+builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 builder.Services.AddScoped<IOrchardService, OrchardService>();
-
-builder.Services.AddAutoMapper(typeof(FruitProfile));
+builder.Services.AddAutoMapper((builder) =>
+{
+    builder.AddCollectionMappers();
+    builder.AddMaps(typeof(FruitProfile), typeof(BasketProfile), typeof(BasketFruitProfile));
+});
 
 var app = builder.Build();
 
