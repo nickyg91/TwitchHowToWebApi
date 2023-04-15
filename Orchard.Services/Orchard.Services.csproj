@@ -7,13 +7,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Orchard.Core\Orchard.Core.csproj" />
-      <ProjectReference Include="..\Orchard.Data\Orchard.Data.csproj" />
+      <ProjectReference Include="..\Orchard.Models\Orchard.Models.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="AutoMapper" Version="12.0.1" />
-      <PackageReference Include="AutoMapper.Extensions.EnumMapping" Version="3.0.1" />
     </ItemGroup>
 
 </Project>

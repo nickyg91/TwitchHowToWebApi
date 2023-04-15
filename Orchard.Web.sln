@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orchard.Models", "Orchard.M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orchard.Core", "Orchard.Core\Orchard.Core.csproj", "{5C4892AF-1261-4C9D-A430-8B7BABF7A1FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orchard.Services", "Orchard.Services\Orchard.Services.csproj", "{B5DEAA6B-90F4-4DD7-82D7-ABE3B63FAE85}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{5C4892AF-1261-4C9D-A430-8B7BABF7A1FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C4892AF-1261-4C9D-A430-8B7BABF7A1FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C4892AF-1261-4C9D-A430-8B7BABF7A1FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5DEAA6B-90F4-4DD7-82D7-ABE3B63FAE85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5DEAA6B-90F4-4DD7-82D7-ABE3B63FAE85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5DEAA6B-90F4-4DD7-82D7-ABE3B63FAE85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5DEAA6B-90F4-4DD7-82D7-ABE3B63FAE85}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

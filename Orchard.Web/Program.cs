@@ -1,5 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Orchard.Data.Contexts;
+using Orchard.Data.Repositories.Implementations;
+using Orchard.Data.Repositories.Interfaces;
+using Orchard.Models.Mappers;
+using Orchard.Services.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +21,11 @@ builder.Services.AddDbContext<OrchardDbContext>(optionsAction =>
         builder.MigrationsAssembly("Orchard.Web");
     });
 });
+
+builder.Services.AddScoped<IFruitRepository, FruitRepository>();
+builder.Services.AddScoped<IOrchardService, OrchardService>();
+
+builder.Services.AddAutoMapper(typeof(FruitProfile));
 
 var app = builder.Build();
 
