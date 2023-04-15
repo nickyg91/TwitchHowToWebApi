@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orchard.Web", "Orchard.Web\Orchard.Web.csproj", "{2CA3AC89-D04E-4AD0-BDAD-6144601C8E69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orchard.Data", "Orchard.Data\Orchard.Data.csproj", "{1ADEE742-5D91-49DB-8849-9DB1EED6D90C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orchard.Models", "Orchard.Models\Orchard.Models.csproj", "{D2AD8AB6-92C6-4921-9E87-16877794A0C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orchard.Core", "Orchard.Core\Orchard.Core.csproj", "{5C4892AF-1261-4C9D-A430-8B7BABF7A1FD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2CA3AC89-D04E-4AD0-BDAD-6144601C8E69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CA3AC89-D04E-4AD0-BDAD-6144601C8E69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CA3AC89-D04E-4AD0-BDAD-6144601C8E69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CA3AC89-D04E-4AD0-BDAD-6144601C8E69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1ADEE742-5D91-49DB-8849-9DB1EED6D90C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1ADEE742-5D91-49DB-8849-9DB1EED6D90C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1ADEE742-5D91-49DB-8849-9DB1EED6D90C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1ADEE742-5D91-49DB-8849-9DB1EED6D90C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2AD8AB6-92C6-4921-9E87-16877794A0C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2AD8AB6-92C6-4921-9E87-16877794A0C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2AD8AB6-92C6-4921-9E87-16877794A0C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2AD8AB6-92C6-4921-9E87-16877794A0C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C4892AF-1261-4C9D-A430-8B7BABF7A1FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C4892AF-1261-4C9D-A430-8B7BABF7A1FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C4892AF-1261-4C9D-A430-8B7BABF7A1FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C4892AF-1261-4C9D-A430-8B7BABF7A1FD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
