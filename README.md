@@ -45,5 +45,13 @@ https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non
 ## Dotnet commands to run
 
 - dotnet tool install --global dotnet-ef
-- dotnet ef migrations add <migration name>
 - dotnet tool install -g dotnet-aspnet-codegenerator
+
+## Running Database migrations
+
+change your directory to Orchard.Web
+run following to add migration
+dotnet ef migrations add <migration name>
+
+run following to update database
+dotnet ef database update
