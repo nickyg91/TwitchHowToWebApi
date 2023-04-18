@@ -25,4 +25,8 @@
     <ProjectReference Include="..\Orchard.Services\Orchard.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="orchard-ui\" />
+  </ItemGroup>
+
 </Project>
