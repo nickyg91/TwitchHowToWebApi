@@ -2,9 +2,8 @@ using Orchard.Core.Enums;
 
 namespace Orchard.Data.Entities;
 
-public class Fruit
+public class Fruit : BaseEntity
 {
-    public int Id { get; set; }
     public FruitType FruitType { get; set; }
     public Shape FruitShape { get; set; }
 }

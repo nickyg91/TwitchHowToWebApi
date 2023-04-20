@@ -13,5 +13,8 @@ public class FruitEntityBuilder : IEntityTypeConfiguration<Fruit>
         builder.Property(x => x.Id).IsRequired().HasColumnName("id").UseIdentityColumn();
         builder.Property(x => x.FruitShape).IsRequired().HasColumnName("fruit_shape");
         builder.Property(x => x.FruitType).IsRequired().HasColumnName("fruit_type");
+        builder.Property(x => x.CreatedAdUtc)
+            .HasColumnName("created_at_utc")
+            .HasDefaultValueSql("timezone('UTC', now())");
     }
 }

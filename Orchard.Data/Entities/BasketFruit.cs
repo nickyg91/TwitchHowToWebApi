@@ -1,10 +1,7 @@
-using Orchard.Data.Entities;
-
 namespace Orchard.Data.Entities;
 
-public class BasketFruit
+public class BasketFruit : BaseEntity
 {
-    public int Id { get; set; }
     public int FruitId { get; set; }
     public int BasketId { get; set; }
     public int Amount { get; set; }

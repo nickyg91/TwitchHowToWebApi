@@ -11,5 +11,13 @@ public class BasketEntityBuilder : IEntityTypeConfiguration<Basket>
         builder.ToTable("basket");
         builder.HasKey(x => x.Id).HasName("pk_basket");
         builder.Property(x => x.Id).HasColumnName("id").UseIdentityColumn();
+        builder.Property(x => x.Name)
+            .HasColumnName("name")
+            .IsUnicode()
+            .HasMaxLength(512)
+            .IsRequired();
+        builder.Property(x => x.CreatedAdUtc)
+            .HasColumnName("created_at_utc")
+            .HasDefaultValueSql("timezone('UTC', now())");
     }
 }

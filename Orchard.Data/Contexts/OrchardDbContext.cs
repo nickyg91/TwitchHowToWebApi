@@ -9,7 +9,8 @@ public class OrchardDbContext : DbContext
     public DbSet<Fruit> Fruit { get; set; }
     public DbSet<BasketFruit> BasketFruits { get; set; }
     public DbSet<Basket> Baskets { get; set; }
-    
+    public DbSet<User> Users { get; set; }
+
     public OrchardDbContext(DbContextOptions<OrchardDbContext> options) : base(options)
     {
     }
@@ -20,8 +21,10 @@ public class OrchardDbContext : DbContext
         var basketConfiguration = new BasketEntityBuilder();
         var fruitConfiguration = new FruitEntityBuilder();
         var basketFruitConfiguration = new BasketFruitEntityBuilder();
+        var userConfiguration = new UserEntityBuilder();
         basketConfiguration.Configure(builder.Entity<Basket>());
         fruitConfiguration.Configure(builder.Entity<Fruit>());
         basketFruitConfiguration.Configure(builder.Entity<BasketFruit>());
+        userConfiguration.Configure(builder.Entity<User>());
     }
 }
