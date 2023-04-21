@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Orchard.Models;
 using Orchard.Services.Domain;
@@ -5,6 +6,7 @@ using Orchard.Services.Domain;
 namespace Orchard.Web.Controllers;
 [Route("api/fruit")]
 [ApiController]
+[Authorize]
 public class FruitController : ControllerBase
 {
     private readonly IOrchardService _orchardService;
@@ -14,7 +16,7 @@ public class FruitController : ControllerBase
         _orchardService = orchardService;
     }
 
-    [HttpGet()]
+    [HttpGet]
     public async Task<List<FruitModel>> GetAllFruits()
     {
         return await _orchardService.GetAllFruit();

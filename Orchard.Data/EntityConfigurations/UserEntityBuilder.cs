@@ -38,7 +38,6 @@ public class UserEntityBuilder : IEntityTypeConfiguration<User>
         
         builder
             .Property(x => x.EmailVerificationGuid)
-            .IsRequired()
             .HasColumnName("email_verification_guid")
             .HasDefaultValueSql("gen_random_uuid()");
         
