@@ -1,10 +1,5 @@
 @import './bulma-overrides.scss';
-section.light {
-  background-color: $white-bis;
-  color: $grey-lighter;
-}
 
-section.light {
-  background-color: $white-bis;
-  color: $grey-lighter;
-}
+$scheme-main: $white;
+$scheme-main-bis: $white-bis;
+$scheme-main-ter: $white-ter;

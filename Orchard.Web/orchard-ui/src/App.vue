@@ -18,7 +18,7 @@ import HelloWorld from './components/HelloWorld.vue';
           </nav>
         </div>
       </header>
-      <RouterView class="card has-text-black" />
+      <RouterView class="card" />
     </div>
   </section>
 </template>

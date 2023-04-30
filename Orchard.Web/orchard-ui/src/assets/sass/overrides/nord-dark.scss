@@ -1,10 +1,5 @@
 @import './bulma-overrides.scss';
-section.dark {
-  background-color: $black-bis;
-  color: $white;
-}
 
-section.dark {
-  background-color: $black-bis;
-  color: $white;
-}
+$scheme-main: $black;
+$scheme-main-bis: $black-bis;
+$scheme-main-ter: $black-ter;
