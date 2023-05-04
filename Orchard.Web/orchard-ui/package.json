@@ -13,6 +13,7 @@
     "prestart": "node aspnetcore-https"
   },
   "dependencies": {
+    "@vueuse/core": "^10.1.2",
     "nord": "^0.2.1",
     "pinia": "^2.0.32",
     "sass": "^1.62.0",
