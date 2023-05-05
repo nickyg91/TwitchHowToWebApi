@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from "vue";
+import { effect, reactive } from "vue";
 import { storeToRefs } from "pinia";
 import useModal from "@/stores/modal.store";
 
@@ -35,7 +35,9 @@ const modal = useModal();
 
 // reactive container to save the payload returned by the mounted view
 const model = reactive({});
+effect(() => {
 
+})
 // convert all state properties to reactive references to be used on view
 const { modalState } = storeToRefs(modal);
 </script>
