@@ -43,7 +43,14 @@ public class UserService : IUserService
     public async Task<bool> CreateAccount(UserModel user)
     {
         User dbUser = _mapper.Map<UserModel, User>(user);
+        dbUser.HashedPassword = _passwordHashService.HashPassword(user.Password);
         bool userCreated = await _userRepository.CreateUser(dbUser);
         return userCreated;
+    }
+
+    public async Task<UserModel> GetUserById(int userId)
+    {
+        var dbUser = await _userRepository.GetUserById(userId);
+        return _mapper.Map<User, UserModel>(dbUser);
     }
 }

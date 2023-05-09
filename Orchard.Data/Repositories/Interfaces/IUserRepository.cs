@@ -8,4 +8,5 @@ public interface IUserRepository
     Task<User?> GetUserByEmail(string email);
     Task<bool> SetEmailGuidVerified(int id);
     Task<User?> GetUserByVerificationGuid(Guid guid);
+    Task<User?> GetUserById(int id);
 }

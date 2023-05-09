@@ -4,7 +4,9 @@ using AutoMapper.EquivalencyExpression;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Orchard.Core.Configuration;
 using Orchard.Core.Services;
+using Orchard.Data.Cache;
 using Orchard.Data.Contexts;
 using Orchard.Data.Repositories.Implementations;
 using Orchard.Data.Repositories.Interfaces;
@@ -57,7 +59,9 @@ builder.Services.AddDbContext<OrchardDbContext>(optionsAction =>
     });
 });
 var jwtSettingsSection = builder.Configuration.GetSection(JwtSettings.JwtSettingsSection);
+var redisSettingsSection = builder.Configuration.GetSection(RedisSettings.RedisSettingsSection);
 builder.Services.Configure<JwtSettings>(jwtSettingsSection);
+builder.Services.Configure<RedisSettings>(redisSettingsSection);
 builder.Services.AddScoped<IFruitRepository, FruitRepository>();
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 builder.Services.AddScoped<IOrchardService, OrchardService>();
@@ -75,6 +79,8 @@ builder.Services.AddAutoMapper((builder) =>
         typeof(BasketFruitProfile), 
         typeof(UserProfile));
 });
+
+builder.Services.AddSingleton<ICacheService, CacheService>();
 
 var app = builder.Build();
 

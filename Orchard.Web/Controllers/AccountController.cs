@@ -8,6 +8,7 @@ using Orchard.Web.Authentication;
 namespace Orchard.Web.Controllers
 {
     [Route("api/account")]
+    [Produces("application/json")]
     [ApiController]
     public class AccountController : ControllerBase
     {
@@ -37,6 +38,18 @@ namespace Orchard.Web.Controllers
             {
                 return Unauthorized(e);
             }
+        }
+
+        [HttpGet("token/refresh/{token}")]
+        public async Task<IActionResult> RefreshToken(string token)
+        {
+            var newToken = await _tokenGenerator.RefreshToken(token);
+            if (newToken == null)
+            {
+                return Forbid();
+            }
+
+            return Ok(newToken);
         }
     }
 }

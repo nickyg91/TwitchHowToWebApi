@@ -43,4 +43,9 @@ public class UserRepository : IUserRepository
         var user = await _ctx.Users.SingleOrDefaultAsync(x => x.EmailVerificationGuid == guid);
         return user;
     }
+
+    public async Task<User?> GetUserById(int id)
+    {
+        return await _ctx.Users.SingleOrDefaultAsync(x => x.Id == id);
+    }
 }
