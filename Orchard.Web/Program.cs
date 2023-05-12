@@ -1,4 +1,3 @@
-using System.Configuration;
 using System.Text;
 using AutoMapper.EquivalencyExpression;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -29,7 +28,6 @@ var orchardConfiguration = builder.Configuration.Get<OrchardConfiguration>();
 string oauthSecret = orchardConfiguration!.JwtSettings!.Key;
 string issuer = orchardConfiguration.JwtSettings.Issuer;
 string audience = orchardConfiguration.JwtSettings.Audience;
-string authorityUrl = orchardConfiguration.JwtSettings.AuthorityUrl;
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
