@@ -9,7 +9,7 @@ using Orchard.Data.Cache;
 using Orchard.Data.Contexts;
 using Orchard.Data.Repositories.Implementations;
 using Orchard.Data.Repositories.Interfaces;
-using Orchard.Models;
+using Orchard.Models.Authentication;
 using Orchard.Models.Mappers;
 using Orchard.Services.Domain;
 using Orchard.Web.Authentication;
@@ -52,9 +52,9 @@ builder.Services.AddDbContext<OrchardDbContext>(optionsAction =>
         optionsAction.EnableDetailedErrors();
         optionsAction.EnableSensitiveDataLogging();
     }
-    optionsAction.UseNpgsql(connectionString, builder =>
+    optionsAction.UseNpgsql(connectionString, settings =>
     {
-        builder.MigrationsAssembly("Orchard.Web");
+        settings.MigrationsAssembly("Orchard.Web");
     });
 });
 var jwtSettingsSection = builder.Configuration.GetSection(JwtSettings.JwtSettingsSection);
@@ -69,10 +69,10 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddTransient<TokenGenerator>();
 builder.Services.AddSingleton<PasswordHashService>();
 
-builder.Services.AddAutoMapper((builder) =>
+builder.Services.AddAutoMapper((settings) =>
 {
-    builder.AddCollectionMappers();
-    builder.AddMaps(
+    settings.AddCollectionMappers();
+    settings.AddMaps(
         typeof(FruitProfile), 
         typeof(BasketProfile), 
         typeof(BasketFruitProfile), 

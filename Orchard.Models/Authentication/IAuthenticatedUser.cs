@@ -1,4 +1,4 @@
-namespace Orchard.Models;
+namespace Orchard.Models.Authentication;
 
 public interface IAuthenticatedUser
 {

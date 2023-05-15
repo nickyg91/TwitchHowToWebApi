@@ -1,6 +1,6 @@
 using System.Security.Claims;
 
-namespace Orchard.Models;
+namespace Orchard.Models.Authentication;
 
 public class AuthenticatedUser : IAuthenticatedUser
 {
