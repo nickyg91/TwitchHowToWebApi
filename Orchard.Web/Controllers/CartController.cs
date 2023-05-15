@@ -17,13 +17,13 @@ public class CartController : ControllerBase
     }
 
     // need to figure out what this id will be for guests
-    [HttpPut("update/{id:string}")]
+    [HttpPut("update/{id}")]
     public async Task UpdateCart(string id, BasketModel basket)
     {
         await _cache.WriteObject(id, basket);
     }
         
-    [HttpPut("{id:string}")]
+    [HttpPut("{id}")]
     public async Task<BasketModel?> GetCart(string id)
     {
         return await _cache.ReadObject<BasketModel>(id);

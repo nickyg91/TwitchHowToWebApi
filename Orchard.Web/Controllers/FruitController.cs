@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Orchard.Models;
 using Orchard.Services.Domain;
@@ -6,7 +5,7 @@ using Orchard.Services.Domain;
 namespace Orchard.Web.Controllers;
 [Route("api/fruit")]
 [ApiController]
-[Authorize]
+[Produces("application/json")]
 public class FruitController : ControllerBase
 {
     private readonly IOrchardService _orchardService;

@@ -5,6 +5,7 @@ using Orchard.Services.Domain;
 namespace Orchard.Web.Controllers
 {
     [Route("api/basket")]
+    [Produces("application/json")]
     [ApiController]
     public class BasketController : ControllerBase
     {
