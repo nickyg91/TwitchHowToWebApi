@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Orchard.Data.Contexts;
@@ -11,9 +12,11 @@ using Orchard.Data.Contexts;
 namespace Orchard.Web.Migrations
 {
     [DbContext(typeof(OrchardDbContext))]
-    partial class OrchardDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230514223925_RestructureTablesForUserBaskets")]
+    partial class RestructureTablesForUserBaskets
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,12 +117,6 @@ namespace Orchard.Web.Migrations
                         .IsUnicode(true)
                         .HasColumnType("character varying(512)")
                         .HasColumnName("name");
-
-                    b.Property<int>("PiecesInInventory")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasDefaultValue(0)
-                        .HasColumnName("pieces_in_inventory");
 
                     b.Property<string>("SkuNumber")
                         .IsRequired()

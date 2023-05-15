@@ -9,6 +9,7 @@ using Orchard.Data.Cache;
 using Orchard.Data.Contexts;
 using Orchard.Data.Repositories.Implementations;
 using Orchard.Data.Repositories.Interfaces;
+using Orchard.Models;
 using Orchard.Models.Mappers;
 using Orchard.Services.Domain;
 using Orchard.Web.Authentication;
@@ -77,6 +78,14 @@ builder.Services.AddAutoMapper((builder) =>
         typeof(BasketFruitProfile), 
         typeof(UserProfile));
 });
+
+builder.Services.AddTransient<IAuthenticatedUser, AuthenticatedUser>(provider =>
+{
+    var user =
+        provider.GetService<IHttpContextAccessor>()!.HttpContext!.User;
+    return new AuthenticatedUser(user);
+});
+
 
 builder.Services.AddSingleton<ICacheService, CacheService>();
 

@@ -4,6 +4,9 @@ namespace Orchard.Data.Cache;
 
 public interface ICacheService
 {
-    public ConnectionMultiplexer Connect(int numberOfRetries);
-    public IDatabase Database { get; }
+    ConnectionMultiplexer Connect(int numberOfRetries);
+    IDatabase Database { get; }
+    Task<T?> ReadObject<T>(string key);
+    Task WriteObject<T>(string key, T obj);
+
 }

@@ -8,4 +8,5 @@ public class User : BaseEntity
     public string LastName { get; set; }
     public DateTime? BirthDate { get; set; }
     public Guid? EmailVerificationGuid { get; set; }
+    public ICollection<Basket> Baskets { get; set; }
 }
