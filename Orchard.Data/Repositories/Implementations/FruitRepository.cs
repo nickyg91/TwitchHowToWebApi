@@ -21,25 +21,53 @@ public class FruitRepository : IFruitRepository
         return fruit;
     }
 
-    public async Task<bool> RemoveFruit(int fruitId)
+    public async Task<bool> ArchiveFruit(int fruitId)
     {
-        var fruitToDelete = await _ctx.Fruit.SingleOrDefaultAsync(x => x.Id == fruitId);
-        if (fruitToDelete == null)
+        var fruitToArchive = await _ctx.Fruit.SingleOrDefaultAsync(x => x.Id == fruitId);
+        if (fruitToArchive == null)
         {
             return false;
         }
-        
-        _ctx.Fruit.Remove(fruitToDelete);
+
+        fruitToArchive.IsArchived = true;
         return await _ctx.SaveChangesAsync() > 0;
     }
 
-    public async Task<List<Fruit>> GetAllFruit()
+    public IEnumerable<Fruit> GetAllFruit()
     {
-        return await _ctx.Fruit.AsNoTracking().ToListAsync();
+        return _ctx.Fruit.AsNoTracking();
+    }
+
+    public IEnumerable<Fruit> GetAllFruitPaginated(int pageNumber, int perPage)
+    {
+        var fruitQuery = _ctx.Fruit.AsNoTracking().Skip((pageNumber - 1) * perPage).Take(pageNumber);
+        return fruitQuery;
     }
 
     public async Task<Fruit?> GetFruitById(int fruitId)
     {
-        return await _ctx.Fruit.SingleOrDefaultAsync(x => x.Id == fruitId);
+        return await _ctx.Fruit
+            .AsNoTracking()
+            .SingleOrDefaultAsync(x => x.Id == fruitId);
+    }
+
+    //very basic, better ways to do this for sure.
+    //full text search, elastisearch, etc.
+    public IEnumerable<Fruit> SearchFruitByNameOrCountryOfOrigin(string nameOrCountryOfOrigin)
+    {
+        var fruitQuery = _ctx.Fruit.Where(x =>
+            x.CountryOfOrigin.Contains(nameOrCountryOfOrigin) || x.Name.Contains(nameOrCountryOfOrigin));
+        return fruitQuery;
+    }
+
+    public async Task<bool> UpdateFruit(Fruit fruit)
+    {
+        _ctx.Fruit.Update(fruit);
+        return await _ctx.SaveChangesAsync() > 0;
+    }
+
+    public async Task<bool> DoesSkuNumberExist(string skuNumber)
+    {
+        return await _ctx.Fruit.Select(x => x.SkuNumber).AnyAsync(x => x == skuNumber);
     }
 }

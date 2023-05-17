@@ -1,4 +1,6 @@
 using AutoMapper;
+using Orchard.Core.Enums;
+using Orchard.Core.Exceptions;
 using Orchard.Data.Entities;
 using Orchard.Data.Repositories.Interfaces;
 using Orchard.Models;
@@ -20,76 +22,66 @@ public class OrchardService : IOrchardService
         _basketRepository = basketRepository;
     }
 
-    public async Task<FruitModel> AddFruit(FruitModel model)
+    public async Task<BasketModel> SubmitOrder(BasketModel model)
     {
-        var mappedDbFruit = _mapper.Map<FruitModel, Fruit>(model);
-
-        await _fruitRepository.AddFruit(mappedDbFruit);
-        return _mapper.Map<Fruit, FruitModel>(mappedDbFruit);
-    }
-
-    public async Task<bool> DeleteFruit(int fruitId)
-    {
-        return await _fruitRepository.RemoveFruit(fruitId);
-    }
-
-    public async Task<List<FruitModel>> GetAllFruit()
-    {
-        return _mapper
-            .Map<List<Fruit>, List<FruitModel>>
-                (await _fruitRepository.GetAllFruit());
-    }
-
-    public async Task<FruitModel?> GetFruitById(int fruitId)
-    {
-        var fruitFromDb = await _fruitRepository.GetFruitById(fruitId);
-        if (fruitFromDb == null)
-        {
-            return null;
-        }
-        return _mapper.Map<Fruit, FruitModel>(fruitFromDb);
-    }
-
-    public async Task<BasketModel> CreateBasket(BasketModel model)
-    {
+        model.OrderStatus = OrderStatus.Submitted;
         var dbMappedBasket = _mapper.Map<BasketModel, Basket>(model);
-        dbMappedBasket = await _basketRepository.AddBasket(dbMappedBasket);
+        dbMappedBasket = await _basketRepository.SubmitBasketOrder(dbMappedBasket);
         return _mapper.Map<Basket, BasketModel>(dbMappedBasket);
     }
 
-    public async Task<List<BasketModel>> GetAllBaskets(bool includeFruit)
+    public async Task<List<BasketModel>> GetAllBasketsByUserId(int userId)
     {
-        var baskets = await _basketRepository.GetAllBaskets(includeFruit);
+        var baskets = await _basketRepository.GetAllBasketsByUserId(userId);
         var mappedBaskets = _mapper.Map<List<Basket>, List<BasketModel>>(baskets);
         return mappedBaskets;
     }
 
-    public async Task<BasketModel?> GetBasketById(int id, bool includeFruit)
+    public async Task<BasketModel?> GetBasketById(int id, int userId)
     {
-        var basket = await _basketRepository.GetBasketById(id, includeFruit);
-
+        var basket = await _basketRepository.GetBasketById(id);
+        
         if (basket == null)
         {
             return null;
+        }
+
+        if (basket.UserId.HasValue && basket.UserId != userId)
+        {
+            throw new UnauthorizedBasketAccessException("You do not have permission to access this basket.");
         }
         
         var mappedBasket = _mapper.Map<Basket, BasketModel>(basket);
         return mappedBasket;
     }
 
-    public async Task<bool> UpdateBasket(BasketModel basket)
+    public async Task<bool> CancelOrder(int id, int userId)
     {
-        var dbBasket = await _basketRepository.GetBasketById(basket.Id, true);
+        var dbBasket = await _basketRepository.GetBasketById(id);
+
         if (dbBasket == null)
         {
             return false;
         }
-        _mapper.Map(basket, dbBasket);
-        return await _basketRepository.UpdateBasket(dbBasket);
+        
+        if (!CanBeCanceled(dbBasket.OrderStatus))
+        {
+            throw new InvalidOrderStatusException(
+                $"Unable to cancel order that has a status of {dbBasket.OrderStatus}.");
+        }
+        return await _basketRepository.CancelBasketOrder(dbBasket);
     }
 
-    public async Task<bool> DeleteBasket(int id)
+    private bool CanBeCanceled(OrderStatus orderStatus)
     {
-        return await _basketRepository.RemoveBasket(id);
+        var cancellableStatuses = new []
+        {
+            OrderStatus.Completed,
+            OrderStatus.Cancelled,
+            OrderStatus.Returned,
+            OrderStatus.ReturnRequested
+        };
+
+        return !cancellableStatuses.Contains(orderStatus);
     }
 }

@@ -25,6 +25,11 @@ public class FruitEntityBuilder : IEntityTypeConfiguration<Fruit>
             .IsRequired()
             .HasColumnName("pieces_in_inventory")
             .HasDefaultValue(0);
+
+        builder.Property(x => x.IsArchived)
+            .IsRequired()
+            .HasColumnName("is_archived")
+            .HasDefaultValue(false);
         
         builder.Property(x => x.CreatedAdUtc)
             .HasColumnName("created_at_utc")

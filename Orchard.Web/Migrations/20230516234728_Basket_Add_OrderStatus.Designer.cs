@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Orchard.Data.Contexts;
@@ -11,9 +12,11 @@ using Orchard.Data.Contexts;
 namespace Orchard.Web.Migrations
 {
     [DbContext(typeof(OrchardDbContext))]
-    partial class OrchardDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230516234728_Basket_Add_OrderStatus")]
+    partial class Basket_Add_OrderStatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -113,12 +116,6 @@ namespace Orchard.Web.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at_utc")
                         .HasDefaultValueSql("timezone('UTC', now())");
-
-                    b.Property<bool>("IsArchived")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("is_archived");
 
                     b.Property<string>("Name")
                         .IsRequired()

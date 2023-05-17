@@ -57,8 +57,10 @@ builder.Services.AddDbContext<OrchardDbContext>(optionsAction =>
         settings.MigrationsAssembly("Orchard.Web");
     });
 });
+
 var jwtSettingsSection = builder.Configuration.GetSection(JwtSettings.JwtSettingsSection);
 var redisSettingsSection = builder.Configuration.GetSection(RedisSettings.RedisSettingsSection);
+
 builder.Services.Configure<JwtSettings>(jwtSettingsSection);
 builder.Services.Configure<RedisSettings>(redisSettingsSection);
 builder.Services.AddScoped<IFruitRepository, FruitRepository>();
@@ -66,6 +68,8 @@ builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 builder.Services.AddScoped<IOrchardService, OrchardService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IOrchardFruitService, OrchardFruitService>();
+builder.Services.AddScoped<IFruitInventoryManagementService, FruitInventoryManagementService>();
 builder.Services.AddTransient<TokenGenerator>();
 builder.Services.AddSingleton<PasswordHashService>();
 

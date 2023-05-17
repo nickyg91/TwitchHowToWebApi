@@ -7,4 +7,5 @@ public class FruitModel
     public string CountryOfOrigin { get; set; }
     public string SkuNumber { get; set; }
     public int PiecesInInventory { get; set; }
+    public bool IsArchived { get; set; }
 }
