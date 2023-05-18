@@ -1,4 +1,5 @@
 import BasketsPage from '@/views/baskets/BasketsPage.vue';
+import LoginForm from '@/views/account/LoginForm.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
 const router = createRouter({
@@ -8,6 +9,11 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: BasketsPage
+    },
+    {
+      path: '/account/create',
+      name: 'createAccount',
+      component: LoginForm
     }
   ]
 });

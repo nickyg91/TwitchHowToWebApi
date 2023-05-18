@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Orchard.Core.Configuration;
 using Orchard.Core.Services;
+using Orchard.Core.Services.Email;
 using Orchard.Data.Cache;
 using Orchard.Data.Contexts;
 using Orchard.Data.Repositories.Implementations;
@@ -29,7 +30,8 @@ var orchardConfiguration = builder.Configuration.Get<OrchardConfiguration>();
 string oauthSecret = orchardConfiguration!.JwtSettings!.Key;
 string issuer = orchardConfiguration.JwtSettings.Issuer;
 string audience = orchardConfiguration.JwtSettings.Audience;
-
+string environmentUrl = "https://localhost:5002";
+    
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
@@ -60,9 +62,13 @@ builder.Services.AddDbContext<OrchardDbContext>(optionsAction =>
 
 var jwtSettingsSection = builder.Configuration.GetSection(JwtSettings.JwtSettingsSection);
 var redisSettingsSection = builder.Configuration.GetSection(RedisSettings.RedisSettingsSection);
+var smtpSettingsSection = builder.Configuration.GetSection(SmtpSettings.SmtpSettingsKey);
+var settings = builder.Configuration.Get<OrchardConfiguration>();
 
 builder.Services.Configure<JwtSettings>(jwtSettingsSection);
 builder.Services.Configure<RedisSettings>(redisSettingsSection);
+builder.Services.Configure<SmtpSettings>(smtpSettingsSection);
+
 builder.Services.AddScoped<IFruitRepository, FruitRepository>();
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 builder.Services.AddScoped<IOrchardService, OrchardService>();
@@ -72,6 +78,9 @@ builder.Services.AddScoped<IOrchardFruitService, OrchardFruitService>();
 builder.Services.AddScoped<IFruitInventoryManagementService, FruitInventoryManagementService>();
 builder.Services.AddTransient<TokenGenerator>();
 builder.Services.AddSingleton<PasswordHashService>();
+builder.Services
+    .AddTransient<IEmailService, EmailService>((_) => 
+        new EmailService(settings.SmtpSettings, environmentUrl));
 
 builder.Services.AddAutoMapper((settings) =>
 {

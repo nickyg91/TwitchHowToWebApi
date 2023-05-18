@@ -13,6 +13,8 @@
     "prestart": "node aspnetcore-https"
   },
   "dependencies": {
+    "@formkit/core": "^0.17.2",
+    "@formkit/vue": "^0.17.2",
     "@vueuse/core": "^10.1.2",
     "axios": "^1.4.0",
     "nord": "^0.2.1",

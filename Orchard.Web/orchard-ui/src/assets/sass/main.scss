@@ -1,3 +1,5 @@
+@import 'overrides/bulma-overrides.scss';
+
 html {
   height: 100vh;
 }
@@ -12,4 +14,20 @@ section.section {
 
 #app {
   height: 100%;
+}
+
+[data-invalid] .formkit-inner {
+  border-color: $danger;
+  border-radius: $radius;
+  box-shadow: $input-focus-box-shadow-size $danger;
+}
+
+[data-complete] .formkit-inner {
+  border-color: $success;
+  border-radius: $radius;
+  box-shadow: $input-focus-box-shadow-size $success;
+}
+
+[data-message-type='validation'].formkit-message {
+  color: $danger;
 }

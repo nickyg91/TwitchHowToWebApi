@@ -20,12 +20,15 @@ $text: $grey-lighter;
 $scheme-main: $black;
 $scheme-main-bis: $black-bis;
 $scheme-main-ter: $black-ter;
+$card-background-color: lighten($nord0, 5%);
 $modal-card-body-background-color: $nord0;
 $modal-card-head-background-color: $nord0;
 $modal-card-footer-background-color: $nord0;
 $modal-card-title-color: $white;
-
+$input-color: $white;
+$label-color: $white;
 //$scheme-invert: $white;
 //$scheme-invert-bis: $white-bis;
 //$scheme-invert-ter: $white-ter;
+
 @import '../../../../node_modules/bulma/bulma.sass';

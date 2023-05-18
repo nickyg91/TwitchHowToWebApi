@@ -1,20 +1,20 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import { join } from 'path'
-import { readFileSync } from 'fs'
-import { fileURLToPath } from 'url'
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import { join } from 'path';
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
 
 export default defineConfig(({ command }) => {
   if (command === 'serve') {
     const baseFolder =
       process.env.APPDATA !== undefined && process.env.APPDATA !== ''
         ? `${process.env.APPDATA}/ASP.NET/https`
-        : `${process.env.HOME}/.aspnet/https`
+        : `${process.env.HOME}/.aspnet/https`;
 
-    const certificateName = process.env.npm_package_name
+    const certificateName = process.env.npm_package_name;
 
-    const certFilePath = join(baseFolder, `${certificateName}.pem`)
-    const keyFilePath = join(baseFolder, `${certificateName}.key`)
+    const certFilePath = join(baseFolder, `${certificateName}.pem`);
+    const keyFilePath = join(baseFolder, `${certificateName}.key`);
     return {
       plugins: [vue()],
       server: {
@@ -26,7 +26,7 @@ export default defineConfig(({ command }) => {
         strictPort: true,
         proxy: {
           '/api': {
-            target: 'https://localhost:7215/',
+            target: 'https://localhost:7193/',
             changeOrigin: true,
             secure: false
           }
@@ -37,7 +37,7 @@ export default defineConfig(({ command }) => {
           '@': fileURLToPath(new URL('./src', import.meta.url))
         }
       }
-    }
+    };
   } else {
     return {
       plugins: [vue()],
@@ -46,6 +46,6 @@ export default defineConfig(({ command }) => {
           '@': fileURLToPath(new URL('./src', import.meta.url))
         }
       }
-    }
+    };
   }
-})
+});
