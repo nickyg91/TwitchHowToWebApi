@@ -1,7 +1,9 @@
-export class ToastNotification {
-  id!: string;
-  type!: 'info' | 'warning' | 'success' | 'danger' | 'link' | 'primary';
-  duration = 5;
-  closable = true;
-  onClose?: Function;
+export interface ToastNotification {
+  id: string;
+  title: string;
+  type: 'info' | 'warning' | 'success' | 'danger' | 'link' | 'primary';
+  duration: number;
+  message: string;
+  autoClose: boolean;
+  isLight: boolean;
 }
