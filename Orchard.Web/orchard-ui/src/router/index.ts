@@ -1,5 +1,5 @@
 import BasketsPage from '@/views/baskets/BasketsPage.vue';
-import LoginForm from '@/views/account/LoginForm.vue';
+import LoginForm from '@/views/account/CreateAccountForm.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
 const router = createRouter({

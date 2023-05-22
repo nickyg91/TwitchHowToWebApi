@@ -5,6 +5,8 @@ import { FormKit } from '@formkit/vue';
 import type { FormKitNode } from '@formkit/core';
 import { useOrchardStore } from '@/stores/orchard.store';
 const orchardState = useOrchardStore();
+const formRef = ref<FormKitNode | null>(null);
+
 function validPassword(node: FormKitNode<unknown>) {
   const value = node.value as string;
   const digits = /[0-9]/;
@@ -28,6 +30,11 @@ const passwordMessages = {
 };
 
 async function createAccount() {
+  const isValid = formRef.value?.context?.state.valid;
+  if (!isValid) {
+    console.log('not valid');
+    return;
+  }
   try {
     const res = await orchardState.createAccount(formValue.value);
     console.log(res);
@@ -40,9 +47,9 @@ async function createAccount() {
 <template>
   <section class="section">
     <div class="card">
-      <div class="card-title is-size-3">Create Account</div>
-      <div class="card-content">
-        <FormKit :actions="false" type="form">
+      <FormKit ref="formRef" #default="{ state: { valid } }" :actions="false" type="form">
+        <div class="card-title is-size-3">Create Account</div>
+        <div class="card-content">
           <FormKit
             type="text"
             name="firstName"
@@ -90,14 +97,24 @@ async function createAccount() {
             validation-visibility="live"
             v-model="formValue.confirmPassword"
           />
-        </FormKit>
-      </div>
-      <div class="card-footer py-2">
-        <div class="is-flex is-flex-direction-row is-justify-content-end is-flex-grow-1">
-          <button @click="createAccount" class="button is-primary mr-2">Submit</button>
-          <button class="button is-warning">Cancel</button>
         </div>
-      </div>
+        <div class="card-footer py-2">
+          <div class="is-flex is-flex-direction-row is-justify-content-end is-flex-grow-1">
+            <button :disabled="!valid" @click="createAccount" class="button ripple is-primary mr-2">
+              <span class="icon">
+                <i class="fa-solid fa-check"></i>
+              </span>
+              <span>Submit</span>
+            </button>
+            <button class="button ripple is-warning">
+              <span class="icon">
+                <i class="fa-solid fa-remove"></i>
+              </span>
+              <span>Cancel</span>
+            </button>
+          </div>
+        </div>
+      </FormKit>
     </div>
   </section>
 </template>

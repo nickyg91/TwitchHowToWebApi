@@ -6,6 +6,9 @@ import router from './router';
 
 import './assets/sass/overrides/bulma-overrides.scss';
 import './assets/sass/main.scss';
+import '../node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss';
+import '../node_modules/@fortawesome/fontawesome-free/scss/brands.scss';
+import '../node_modules/@fortawesome/fontawesome-free/scss/solid.scss';
 
 const app = createApp(App);
 
