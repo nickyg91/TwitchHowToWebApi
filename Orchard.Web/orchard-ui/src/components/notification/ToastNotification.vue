@@ -57,7 +57,8 @@ const isLight = computed(() => {
 const notyStyle = computed(() => `notification ${isLight.value} ${color.value}`);
 </script>
 <template>
-  <div :class="notyStyle">
+  <div @click="close" :class="notyStyle">
+    <button @click="close" class="delete"></button>
     <span class="is-size-4">
       {{ title }}
     </span>
@@ -67,4 +68,10 @@ const notyStyle = computed(() => `notification ${isLight.value} ${color.value}`)
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.notification {
+  z-index: 1;
+  width: 350px;
+  position: relative;
+}
+</style>

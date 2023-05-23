@@ -1,5 +1,5 @@
 export interface ToastNotification {
-  id: string;
+  id?: string | null;
   title: string;
   type: 'info' | 'warning' | 'success' | 'danger' | 'link' | 'primary';
   duration: number;

@@ -1,3 +1,4 @@
+import useNotifications from '@/components/notification/state';
 import { axiosInstance } from '@/shared/axios-config';
 import type { ILoginResult } from '@/shared/models/login-result.inerface';
 import type { User } from '@/shared/models/user.model';
@@ -12,6 +13,7 @@ export interface IOrchardStore {
 }
 
 export const useOrchardStore = defineStore('orchardStore', () => {
+  const notys = useNotifications();
   const orchardState = reactive({
     token: null,
     refreshToken: null,
@@ -19,7 +21,41 @@ export const useOrchardStore = defineStore('orchardStore', () => {
   } as IOrchardStore);
 
   async function createAccount(account: CreateAccountModel): Promise<boolean> {
-    return (await axiosInstance.post<boolean>('/api/account/create', account)).data;
+    try {
+      const resp = (await axiosInstance.post<boolean>('/api/account/create', account)).data;
+
+      if (resp) {
+        notys.notify({
+          autoClose: true,
+          duration: 2,
+          isLight: true,
+          message: 'Account created successfully!',
+          title: 'Account Created',
+          type: 'success'
+        });
+        return resp;
+      } else {
+        notys.notify({
+          autoClose: true,
+          duration: 2,
+          isLight: true,
+          message: 'Error: Failed to create account!',
+          title: 'Error',
+          type: 'danger'
+        });
+        return false;
+      }
+    } catch (exception) {
+      notys.notify({
+        autoClose: true,
+        duration: 2,
+        isLight: true,
+        message: 'Error: Failed to create account!',
+        title: 'Error',
+        type: 'danger'
+      });
+      return false;
+    }
   }
 
   async function logIn(email: string, password: string): Promise<ILoginResult | null> {
