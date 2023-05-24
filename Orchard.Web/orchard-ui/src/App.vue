@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
 import DialogBox from './components/DialogBox.vue';
-
+import ToasterBlock from './components/notification/ToasterBlock.vue';
 </script>
 <template>
   <section class="section">
@@ -9,6 +9,7 @@ import DialogBox from './components/DialogBox.vue';
       <RouterView class="card" />
     </div>
     <DialogBox />
+    <ToasterBlock />
   </section>
 </template>
-<style scoped></style>
+<style lang="scss" scoped></style>

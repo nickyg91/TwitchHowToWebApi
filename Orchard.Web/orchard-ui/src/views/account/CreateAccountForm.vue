@@ -2,12 +2,12 @@
 import { ref } from 'vue';
 import { CreateAccountModel } from './models/create-account.model';
 import { FormKit } from '@formkit/vue';
-import type { FormKitNode } from '@formkit/core';
+import type { FormKitContext } from '@formkit/core';
 import { useOrchardStore } from '@/stores/orchard.store';
 const orchardState = useOrchardStore();
-const formRef = ref<FormKitNode | null>(null);
+const formRef = ref<any | null>(null);
 
-function validPassword(node: FormKitNode<unknown>) {
+function validPassword(node: FormKitContext) {
   const value = node.value as string;
   const digits = /[0-9]/;
   const lowerCaseLetters = /[a-z]/;
@@ -30,17 +30,11 @@ const passwordMessages = {
 };
 
 async function createAccount() {
-  const isValid = formRef.value?.context?.state.valid;
+  const isValid = formRef.value?.node?.context?.state.valid;
   if (!isValid) {
-    console.log('not valid');
     return;
   }
-  try {
-    const res = await orchardState.createAccount(formValue.value);
-    console.log(res);
-  } catch (error) {
-    console.error(error);
-  }
+  const res = await orchardState.createAccount(formValue.value);
 }
 </script>
 
@@ -100,17 +94,16 @@ async function createAccount() {
         </div>
         <div class="card-footer py-2">
           <div class="is-flex is-flex-direction-row is-justify-content-end is-flex-grow-1">
-            <button :disabled="!valid" @click="createAccount" class="button ripple is-primary mr-2">
+            <button
+              type="button"
+              :disabled="!valid"
+              @click="createAccount"
+              class="button ripple is-primary mr-2"
+            >
               <span class="icon">
                 <i class="fa-solid fa-check"></i>
               </span>
               <span>Submit</span>
-            </button>
-            <button class="button ripple is-warning">
-              <span class="icon">
-                <i class="fa-solid fa-remove"></i>
-              </span>
-              <span>Cancel</span>
             </button>
           </div>
         </div>
