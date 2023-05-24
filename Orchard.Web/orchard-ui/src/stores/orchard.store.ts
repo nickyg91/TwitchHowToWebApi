@@ -26,7 +26,7 @@ export const useOrchardStore = defineStore('orchardStore', () => {
 
       if (resp) {
         notys.notify({
-          autoClose: true,
+          autoClose: false,
           duration: 2,
           isLight: true,
           message: 'Account created successfully!',
@@ -36,7 +36,7 @@ export const useOrchardStore = defineStore('orchardStore', () => {
         return resp;
       } else {
         notys.notify({
-          autoClose: true,
+          autoClose: false,
           duration: 2,
           isLight: true,
           message: 'Error: Failed to create account!',
@@ -47,7 +47,7 @@ export const useOrchardStore = defineStore('orchardStore', () => {
       }
     } catch (exception) {
       notys.notify({
-        autoClose: true,
+        autoClose: false,
         duration: 2,
         isLight: true,
         message: 'Error: Failed to create account!',
