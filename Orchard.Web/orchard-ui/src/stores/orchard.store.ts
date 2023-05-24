@@ -59,13 +59,27 @@ export const useOrchardStore = defineStore('orchardStore', () => {
   }
 
   async function logIn(email: string, password: string): Promise<ILoginResult | null> {
-    const response = (
-      await axiosInstance.post<ILoginResult>('/api/account/login', {
-        email,
-        password
-      })
-    ).data;
-    return response;
+    try {
+      const response = (
+        await axiosInstance.post<ILoginResult>('/api/account/login', {
+          email,
+          password
+        })
+      ).data;
+      orchardState.token = response.token;
+      orchardState.refreshToken = response.refreshToken;
+      return response;
+    } catch (error) {
+      notys.notify({
+        autoClose: true,
+        duration: 5,
+        message: 'Error logging in.',
+        title: 'Unable to log in.',
+        isLight: false,
+        type: 'danger'
+      });
+      return null;
+    }
   }
 
   return { createAccount, logIn, orchardState };

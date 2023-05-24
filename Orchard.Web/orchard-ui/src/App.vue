@@ -5,8 +5,8 @@ import ToasterBlock from './components/notification/ToasterBlock.vue';
 </script>
 <template>
   <section class="section">
-    <div class="container">
-      <RouterView class="card" />
+    <div class="is-flex is-align-items-center is-justify-content-center container is-vcentered">
+      <RouterView />
     </div>
     <DialogBox />
     <ToasterBlock />

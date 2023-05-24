@@ -1,6 +1,8 @@
 import BasketsPage from '@/views/baskets/BasketsPage.vue';
-import LoginForm from '@/views/account/CreateAccountForm.vue';
-import { createRouter, createWebHistory } from 'vue-router';
+import CreateAccountForm from '@/views/account/CreateAccountForm.vue';
+import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
+import { useOrchardStore } from '@/stores/orchard.store';
+import LogIn from '@/views/account/LogIn.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,14 +10,26 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: BasketsPage
+      component: BasketsPage,
+      beforeEnter: () => {
+        const orchardStore = useOrchardStore();
+        if (!orchardStore.orchardState.token) {
+          return '/log-in';
+        }
+        return true;
+      }
+    },
+    {
+      path: '/log-in',
+      name: 'logIn',
+      component: LogIn
     },
     {
       path: '/account/create',
       name: 'createAccount',
-      component: LoginForm
+      component: CreateAccountForm
     }
-  ]
+  ] as RouteRecordRaw[]
 });
 
 export default router;

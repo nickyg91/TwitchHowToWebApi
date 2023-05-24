@@ -6,6 +6,7 @@ import type { FormKitContext } from '@formkit/core';
 import { useOrchardStore } from '@/stores/orchard.store';
 const orchardState = useOrchardStore();
 const formRef = ref<any | null>(null);
+const emit = defineEmits<{ (e: 'created', value: boolean): void }>();
 
 function validPassword(node: FormKitContext) {
   const value = node.value as string;
@@ -35,6 +36,7 @@ async function createAccount() {
     return;
   }
   const res = await orchardState.createAccount(formValue.value);
+  emit('created', res);
 }
 </script>
 
@@ -42,7 +44,6 @@ async function createAccount() {
   <section class="section">
     <div class="card">
       <FormKit ref="formRef" #default="{ state: { valid } }" :actions="false" type="form">
-        <div class="card-title is-size-3">Create Account</div>
         <div class="card-content">
           <FormKit
             type="text"
@@ -91,9 +92,7 @@ async function createAccount() {
             validation-visibility="live"
             v-model="formValue.confirmPassword"
           />
-        </div>
-        <div class="card-footer py-2">
-          <div class="is-flex is-flex-direction-row is-justify-content-end is-flex-grow-1">
+          <div class="mt-3 is-flex is-flex-direction-row is-justify-content-end is-flex-grow-1">
             <button
               type="button"
               :disabled="!valid"

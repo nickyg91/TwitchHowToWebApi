@@ -5,7 +5,8 @@ export type Modal = {
   title?: string | null;
   opened: boolean;
   view: Component;
-  actions?: ModalAction[];
+  actions?: ModalAction[] | null;
+  events: Object | undefined;
 };
 export type ModalAction = {
   label: string;
@@ -17,14 +18,21 @@ export const useModal = defineStore('modalStore', () => {
     title: null,
     opened: false,
     view: {},
-    actions: []
+    actions: [],
+    events: Object
   });
 
-  function open(view: Component, title?: string, actions?: ModalAction[]) {
+  function open(
+    view: Component,
+    title?: string | null,
+    actions?: ModalAction[] | null,
+    events?: Object
+  ) {
     modalState.title = title;
     modalState.opened = true;
     modalState.view = markRaw(view);
     modalState.actions = actions;
+    modalState.events = events;
   }
 
   function close(): void {
@@ -32,6 +40,7 @@ export const useModal = defineStore('modalStore', () => {
     modalState.opened = false;
     modalState.view = {};
     modalState.actions = [];
+    modalState.events = {};
   }
 
   return {
