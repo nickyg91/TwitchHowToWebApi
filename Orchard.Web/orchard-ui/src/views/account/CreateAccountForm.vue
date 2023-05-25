@@ -97,7 +97,7 @@ async function createAccount() {
               type="button"
               :disabled="!valid"
               @click="createAccount"
-              class="button ripple is-primary mr-2"
+              class="button is-primary mr-2"
             >
               <span class="icon">
                 <i class="fa-solid fa-check"></i>

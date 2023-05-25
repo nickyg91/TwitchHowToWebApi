@@ -56,7 +56,10 @@ public class TokenGenerator
             new List<Claim>
             {
                 new("userId", user.Id.ToString()),
-                new("email", user.Email)
+                new("email", user.Email),
+                new("firstName", user.FirstName),
+                new("lastName", user.LastName),
+                new("birthday", user.BirthDate?.ToShortDateString() ?? string.Empty)
             },
             null,
             DateTime.UtcNow.AddMinutes(30),

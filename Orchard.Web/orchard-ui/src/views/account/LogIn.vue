@@ -13,6 +13,7 @@ const formValue = reactive({
 });
 
 const modal = useModal();
+const isLoading = ref(false);
 
 function createAccount() {
   modal.open(CreateAccountForm, null, null, {
@@ -25,7 +26,9 @@ function createAccount() {
 }
 
 async function submitLogin(): Promise<void> {
+  isLoading.value = true;
   const result = await orchardStore.logIn(formValue.email, formValue.password);
+  isLoading.value = false;
   if (result == null) {
     return;
   }
@@ -65,7 +68,8 @@ async function submitLogin(): Promise<void> {
                 type="button"
                 :disabled="!valid"
                 @click="submitLogin"
-                class="button ripple is-fullwidth is-success is-large"
+                :class="{ 'is-loading': isLoading }"
+                class="button is-fullwidth is-success is-large"
               >
                 Log In
               </button>
@@ -74,7 +78,7 @@ async function submitLogin(): Promise<void> {
               <button
                 @click="createAccount"
                 type="button"
-                class="button ripple is-fullwidth is-info is-large"
+                class="button is-fullwidth is-info is-large"
               >
                 Create Account
               </button>

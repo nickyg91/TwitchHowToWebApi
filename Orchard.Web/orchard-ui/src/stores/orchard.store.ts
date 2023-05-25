@@ -66,8 +66,16 @@ export const useOrchardStore = defineStore('orchardStore', () => {
           password
         })
       ).data;
+      console.log(response);
       orchardState.token = response.token;
       orchardState.refreshToken = response.refreshToken;
+      orchardState.user = {
+        id: Number(response.claims.find((x) => x.type === 'userId')?.value),
+        email: response.claims.find((x) => x.type === 'email')?.value,
+        firstName: response.claims.find((x) => x.type === 'firstName')?.value,
+        lastName: response.claims.find((x) => x.type === 'lastName')?.value,
+        birthDate: response.claims.find((x) => x.type === 'birthDate')?.value
+      } as User;
       return response;
     } catch (error) {
       notys.notify({
