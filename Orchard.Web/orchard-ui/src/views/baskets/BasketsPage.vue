@@ -1,5 +1,5 @@
 <script setup lang="ts"></script>
 <template>
-  <div></div>
+  <div>long content</div>
 </template>
 <style scoped></style>

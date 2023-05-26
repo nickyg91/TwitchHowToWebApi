@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import useModal from '@/stores/modal.store';
+import useModal from '@/components/modal/modal.store';
 import { useOrchardStore } from '@/stores/orchard.store';
 import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';

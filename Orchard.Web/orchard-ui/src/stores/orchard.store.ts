@@ -1,10 +1,12 @@
 import useNotifications from '@/components/notification/state';
 import { axiosInstance } from '@/shared/axios-config';
+import type { IFruit } from '@/shared/models/fruit.interface';
 import type { ILoginResult } from '@/shared/models/login-result.inerface';
 import type { User } from '@/shared/models/user.model';
 import type { CreateAccountModel } from '@/views/account/models/create-account.model';
+import axios from 'axios';
 import { defineStore } from 'pinia';
-import { reactive } from 'vue';
+import { ref } from 'vue';
 
 export interface IOrchardStore {
   token?: string | null;
@@ -14,11 +16,10 @@ export interface IOrchardStore {
 
 export const useOrchardStore = defineStore('orchardStore', () => {
   const notys = useNotifications();
-  const orchardState = reactive({
-    token: null,
-    refreshToken: null,
-    user: null
-  } as IOrchardStore);
+  const user = ref<User | null>(null);
+  const token = ref<string | null>(null);
+  const refreshToken = ref<string | null>(null);
+  const products = ref<IFruit[] | null>(null);
 
   async function createAccount(account: CreateAccountModel): Promise<boolean> {
     try {
@@ -66,10 +67,9 @@ export const useOrchardStore = defineStore('orchardStore', () => {
           password
         })
       ).data;
-      console.log(response);
-      orchardState.token = response.token;
-      orchardState.refreshToken = response.refreshToken;
-      orchardState.user = {
+      token.value = response.token;
+      refreshToken.value = response.refreshToken;
+      user.value = {
         id: Number(response.claims.find((x) => x.type === 'userId')?.value),
         email: response.claims.find((x) => x.type === 'email')?.value,
         firstName: response.claims.find((x) => x.type === 'firstName')?.value,
@@ -90,5 +90,9 @@ export const useOrchardStore = defineStore('orchardStore', () => {
     }
   }
 
-  return { createAccount, logIn, orchardState };
+  // async function getProducts(pageNumber: number, perPage: number): Promise<IFruit[]> {
+  //   const fruit = await axiosInstance.get<IFruit[]>
+  // }
+
+  return { createAccount, logIn, user, token, refreshToken };
 });

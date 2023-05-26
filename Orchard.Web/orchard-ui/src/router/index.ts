@@ -13,7 +13,7 @@ const router = createRouter({
       component: BasketsPage,
       beforeEnter: () => {
         const orchardStore = useOrchardStore();
-        if (!orchardStore.orchardState.token) {
+        if (!orchardStore.token) {
           return '/log-in';
         }
         return true;

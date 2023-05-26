@@ -1,19 +1,25 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
-import DialogBox from './components/DialogBox.vue';
+import DialogBox from './components/modal/DialogBox.vue';
 import ToasterBlock from './components/notification/ToasterBlock.vue';
 import TopBar from './components/TopBar.vue';
 import { useOrchardStore } from './stores/orchard.store';
+import { computed } from 'vue';
 
 const orchardStore = useOrchardStore();
-const isLoggedIn = orchardStore.orchardState.user !== null;
+const isLoggedIn = computed(() => orchardStore.user !== null);
 </script>
 <template>
-  <section class="section">
-    <div class="is-flex is-align-items-center is-justify-content-center container is-vcentered">
+  <section>
+    <div class="mt-6 is-flex is-align-items-center is-justify-content-center container">
       <TopBar v-if="isLoggedIn" />
-      <RouterView />
     </div>
+    <div class="section">
+      <div class="is-flex is-align-items-center is-justify-content-center container mt-6">
+        <RouterView />
+      </div>
+    </div>
+
     <DialogBox />
     <ToasterBlock />
   </section>

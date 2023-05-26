@@ -36,7 +36,7 @@
 <script setup lang="ts">
 import { effect } from 'vue';
 import { storeToRefs } from 'pinia';
-import useModal from '@/stores/modal.store';
+import useModal from '@/components/modal/modal.store';
 
 const modal = useModal();
 
