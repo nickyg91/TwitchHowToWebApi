@@ -1,10 +1,9 @@
 import useNotifications from '@/components/notification/state';
-import { axiosInstance } from '@/shared/axios-config';
+import { axiosInstance, setToken } from '@/shared/axios-config';
 import type { IFruit } from '@/shared/models/fruit.interface';
 import type { ILoginResult } from '@/shared/models/login-result.inerface';
 import type { User } from '@/shared/models/user.model';
 import type { CreateAccountModel } from '@/views/account/models/create-account.model';
-import axios from 'axios';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
@@ -76,6 +75,9 @@ export const useOrchardStore = defineStore('orchardStore', () => {
         lastName: response.claims.find((x) => x.type === 'lastName')?.value,
         birthDate: response.claims.find((x) => x.type === 'birthDate')?.value
       } as User;
+
+      setToken(token.value);
+
       return response;
     } catch (error) {
       notys.notify({
@@ -90,9 +92,13 @@ export const useOrchardStore = defineStore('orchardStore', () => {
     }
   }
 
-  // async function getProducts(pageNumber: number, perPage: number): Promise<IFruit[]> {
-  //   const fruit = await axiosInstance.get<IFruit[]>
-  // }
+  async function getProducts(pageNumber: number, perPage: number): Promise<IFruit[]> {
+    const fruit = (
+      await axiosInstance.get<IFruit[]>(`api/fruit/page/${pageNumber}/size/${perPage}`)
+    ).data;
+    products.value = fruit;
+    return fruit;
+  }
 
-  return { createAccount, logIn, user, token, refreshToken };
+  return { createAccount, logIn, user, token, refreshToken, getProducts };
 });

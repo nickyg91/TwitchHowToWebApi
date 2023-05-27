@@ -34,7 +34,7 @@ async function submitLogin(): Promise<void> {
   }
   //redirect here
   router.push({
-    name: 'home'
+    name: 'orchard'
   });
 }
 </script>

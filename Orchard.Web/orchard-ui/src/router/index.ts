@@ -3,6 +3,7 @@ import CreateAccountForm from '@/views/account/CreateAccountForm.vue';
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
 import { useOrchardStore } from '@/stores/orchard.store';
 import LogIn from '@/views/account/LogIn.vue';
+import FruitList from '@/views/fruit/fruit-list/FruitList.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,6 +29,11 @@ const router = createRouter({
       path: '/account/create',
       name: 'createAccount',
       component: CreateAccountForm
+    },
+    {
+      path: '/orchard',
+      name: 'orchard',
+      component: FruitList
     }
   ] as RouteRecordRaw[]
 });

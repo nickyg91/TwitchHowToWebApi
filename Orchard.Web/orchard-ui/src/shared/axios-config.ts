@@ -44,6 +44,17 @@ function determine400ErrorMessage(data: ModelStateErrors): string {
   return invalidFields;
 }
 
+function setToken(token: string): void {
+  axiosInstance.interceptors.request.use((instance) => {
+    instance.headers.set('Authorization', `Bearer ${token}`);
+    return instance;
+  });
+}
+
+function refreshToken(refreshToken: string): void {
+  // stubbed for now
+}
+
 export class ModelStateErrors {
   title!: string;
   errors!: {
@@ -51,4 +62,4 @@ export class ModelStateErrors {
   };
 }
 
-export { axiosInstance, setupInstance };
+export { axiosInstance, setupInstance, setToken, refreshToken };

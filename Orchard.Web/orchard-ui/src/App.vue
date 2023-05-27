@@ -11,15 +11,16 @@ const isLoggedIn = computed(() => orchardStore.user !== null);
 </script>
 <template>
   <section>
-    <div class="mt-6 is-flex is-align-items-center is-justify-content-center container">
+    <div class="mt-3 is-flex is-align-items-center is-justify-content-center container">
       <TopBar v-if="isLoggedIn" />
     </div>
     <div class="section">
-      <div class="is-flex is-align-items-center is-justify-content-center container mt-6">
-        <RouterView />
+      <div class="container">
+        <Suspense>
+          <RouterView />
+        </Suspense>
       </div>
     </div>
-
     <DialogBox />
     <ToasterBlock />
   </section>

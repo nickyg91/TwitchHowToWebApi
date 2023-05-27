@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Orchard.Models;
 using Orchard.Services.Domain;
@@ -5,37 +6,38 @@ using Orchard.Services.Domain;
 namespace Orchard.Web.Controllers;
 [Route("api/fruit")]
 [ApiController]
+[Authorize]
 [Produces("application/json")]
 public class FruitController : ControllerBase
 {
-    private readonly IOrchardService _orchardService;
+    private readonly IOrchardFruitService _orchardFruitService;
     
-    public FruitController(IOrchardService orchardService)
+    public FruitController(IOrchardFruitService orchardFruitService)
     {
-        _orchardService = orchardService;
+        _orchardFruitService = orchardFruitService;
     }
 
-    // [HttpGet]
-    // public async Task<List<FruitModel>> GetAllFruits()
-    // {
-    //     return await _orchardService.GetAllFruit();
-    // }
-    //
-    // [HttpGet("{id:int}")]
-    // public async Task<FruitModel?> GetFruitById(int id)
-    // {
-    //     return await _orchardService.GetFruitById(id);
-    // }
-    //
-    // [HttpPost("create")]
-    // public async Task<FruitModel> CreateFruit(FruitModel fruit)
-    // {
-    //     return await _orchardService.AddFruit(fruit);
-    // }
-    //
-    // [HttpDelete("delete/{id:int}")]
-    // public async Task<bool> DeleteFruit(int id)
-    // {
-    //     return await _orchardService.DeleteFruit(id);
-    // }
+    [HttpGet("page/{page}/size/{size}")]
+    public List<FruitModel> GetAllFruits(int page, int size)
+    {
+        return _orchardFruitService.GetPaginatedFruit(page, size);
+    }
+    
+    [HttpGet("{id:int}")]
+    public async Task<FruitModel?> GetFruitById(int id)
+    {
+        return await _orchardFruitService.GetFruitById(id);
+    }
+    
+    [HttpGet]
+    public List<FruitModel> GetAllFruit()
+    {
+        return _orchardFruitService.GetAllFruit();
+    }
+    
+    [HttpGet("search/{query}")]
+    public List<FruitModel> DeleteFruit(string query)
+    {
+        return _orchardFruitService.SearchFruit(query);
+    }
 }
