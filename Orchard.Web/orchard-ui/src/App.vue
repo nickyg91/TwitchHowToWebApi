@@ -10,12 +10,12 @@ const orchardStore = useOrchardStore();
 const isLoggedIn = computed(() => orchardStore.user !== null);
 </script>
 <template>
-  <section>
+  <section class="section">
     <div class="mt-3 is-flex is-align-items-center is-justify-content-center container">
       <TopBar v-if="isLoggedIn" />
     </div>
-    <div class="section">
-      <div class="container">
+    <div class="container">
+      <div>
         <Suspense>
           <RouterView />
         </Suspense>

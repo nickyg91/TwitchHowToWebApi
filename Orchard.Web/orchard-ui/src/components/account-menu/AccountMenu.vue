@@ -4,7 +4,7 @@ import type { MenuItem } from './models/menu-item.model';
 const props = defineProps<{ menuItems: MenuItem[] }>();
 </script>
 <template>
-  <div class="menu has-background-black-ter">
+  <div class="menu has-background-black">
     <ul class="menu-list">
       <li v-for="(item, index) in props.menuItems" v-bind:key="index">
         <RouterLink :to="item.route" :key="index" :active-class="'is-active'">

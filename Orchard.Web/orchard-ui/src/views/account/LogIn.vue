@@ -39,52 +39,54 @@ async function submitLogin(): Promise<void> {
 }
 </script>
 <template>
-  <div class="login-container">
-    <div class="p-2 card">
-      <header class="card-header has-text-centered">
-        <p class="card-header-title is-centered is-size-2">Log In</p>
-      </header>
-      <div class="card-content">
-        <FormKit ref="formRef" #default="{ state: { valid } }" :actions="false" type="form">
-          <FormKit
-            type="email"
-            name="email"
-            label="Email"
-            placeholder="Orchard@email.com"
-            validation="required|email"
-            v-model="formValue.email"
-          />
-          <FormKit
-            type="password"
-            name="password"
-            label="Password"
-            placeholder="Password"
-            validation="required"
-            v-model="formValue.password"
-          />
-          <div class="mt-5">
-            <div>
-              <button
-                type="button"
-                :disabled="!valid"
-                @click="submitLogin"
-                :class="{ 'is-loading': isLoading }"
-                class="button is-fullwidth is-success is-large"
-              >
-                Log In
-              </button>
+  <div class="container is-flex is-justify-content-center is-flex-direction-row">
+    <div class="login-container">
+      <div class="p-2 card">
+        <header class="card-header has-text-centered">
+          <p class="card-header-title is-centered is-size-2">Log In</p>
+        </header>
+        <div class="card-content">
+          <FormKit ref="formRef" #default="{ state: { valid } }" :actions="false" type="form">
+            <FormKit
+              type="email"
+              name="email"
+              label="Email"
+              placeholder="Orchard@email.com"
+              validation="required|email"
+              v-model="formValue.email"
+            />
+            <FormKit
+              type="password"
+              name="password"
+              label="Password"
+              placeholder="Password"
+              validation="required"
+              v-model="formValue.password"
+            />
+            <div class="mt-5">
+              <div>
+                <button
+                  type="button"
+                  :disabled="!valid"
+                  @click="submitLogin"
+                  :class="{ 'is-loading': isLoading }"
+                  class="button is-fullwidth is-success is-large"
+                >
+                  Log In
+                </button>
+              </div>
+              <div class="mt-2">
+                <button
+                  @click="createAccount"
+                  type="button"
+                  class="button is-fullwidth is-info is-large"
+                >
+                  Create Account
+                </button>
+              </div>
             </div>
-            <div class="mt-2">
-              <button
-                @click="createAccount"
-                type="button"
-                class="button is-fullwidth is-info is-large"
-              >
-                Create Account
-              </button>
-            </div>
-          </div>
-        </FormKit>
+          </FormKit>
+        </div>
       </div>
     </div>
   </div>

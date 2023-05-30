@@ -40,7 +40,7 @@ public class FruitRepository : IFruitRepository
 
     public IEnumerable<Fruit> GetAllFruitPaginated(int pageNumber, int perPage)
     {
-        var fruitQuery = _ctx.Fruit.AsNoTracking().Skip((pageNumber - 1) * perPage).Take(pageNumber);
+        var fruitQuery = _ctx.Fruit.AsNoTracking().Skip((pageNumber - 1) * perPage).Take(perPage);
         return fruitQuery;
     }
 

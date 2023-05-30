@@ -1,5 +1,6 @@
 import useNotifications from '@/components/notification/state';
 import { axiosInstance, setToken } from '@/shared/axios-config';
+import type { Cart } from '@/shared/cart/cart.model';
 import type { IFruit } from '@/shared/models/fruit.interface';
 import type { ILoginResult } from '@/shared/models/login-result.inerface';
 import type { User } from '@/shared/models/user.model';
@@ -19,6 +20,7 @@ export const useOrchardStore = defineStore('orchardStore', () => {
   const token = ref<string | null>(null);
   const refreshToken = ref<string | null>(null);
   const products = ref<IFruit[] | null>(null);
+  const cart = ref<Cart>({});
 
   async function createAccount(account: CreateAccountModel): Promise<boolean> {
     try {
@@ -77,7 +79,7 @@ export const useOrchardStore = defineStore('orchardStore', () => {
       } as User;
 
       setToken(token.value);
-
+      await getCurrentCartForUser();
       return response;
     } catch (error) {
       notys.notify({
@@ -97,8 +99,47 @@ export const useOrchardStore = defineStore('orchardStore', () => {
       await axiosInstance.get<IFruit[]>(`api/fruit/page/${pageNumber}/size/${perPage}`)
     ).data;
     products.value = fruit;
-    return fruit;
+    return products.value;
   }
 
-  return { createAccount, logIn, user, token, refreshToken, getProducts };
+  async function getCurrentCartForUser(): Promise<Cart | null> {
+    try {
+      const response = (await axiosInstance.get('api/cart')).data;
+      cart.value = response;
+      return cart.value;
+    } catch (error) {
+      notys.notify({
+        autoClose: true,
+        duration: 2,
+        message: 'Unable to retrieve previous cart! A new cart will be used.',
+        title: 'Could not load previous cart!',
+        type: 'danger',
+        isLight: false,
+        id: null
+      });
+      return null;
+    }
+  }
+
+  async function updateCart(fruitId: number, totalAddedOrRemoved: number): Promise<void> {
+    const previousCart = cart.value;
+    try {
+      const cartValue = Number(cart.value[fruitId] ?? 0);
+      cart.value[fruitId] = cartValue + totalAddedOrRemoved;
+      await axiosInstance.put<Cart>('api/cart/update', cart.value);
+    } catch (error) {
+      notys.notify({
+        autoClose: true,
+        duration: 2,
+        message: 'Unable to update cart!',
+        title: 'Could not load previous cart!',
+        type: 'danger',
+        isLight: false,
+        id: null
+      });
+      cart.value = previousCart;
+    }
+  }
+
+  return { createAccount, logIn, user, token, refreshToken, getProducts, cart, updateCart };
 });
