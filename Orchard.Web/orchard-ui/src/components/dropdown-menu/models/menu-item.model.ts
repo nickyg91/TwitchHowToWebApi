@@ -4,5 +4,4 @@ export abstract class MenuItem {
   text!: string;
   route!: RouteLocationRaw;
   icon?: string | null;
-  action?: (item: MenuItem) => {};
 }

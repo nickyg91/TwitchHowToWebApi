@@ -2,9 +2,10 @@
 import { useOrchardStore } from '@/stores/orchard.store';
 import { MenuItem } from './dropdown-menu/models/menu-item.model';
 import DropdownMenu from './dropdown-menu/DropdownMenu.vue';
-import { computed } from 'vue';
-import type { CartItem } from '@/shared/cart/cart-item.model';
+import useModal from './modal/modal.store';
+import CartContents from './cart/CartContents.vue';
 const orchardStore = useOrchardStore();
+const modal = useModal();
 
 const menuItems: MenuItem[] = [
   {
@@ -30,32 +31,16 @@ const menuItems: MenuItem[] = [
   }
 ];
 
-const cartItems = computed<CartItem[]>(() => {
-  const fruit = orchardStore.products;
-  const cartItems: CartItem[] = [];
-  for (const key in orchardStore.cart) {
-    const foundFruit = fruit?.find((x) => x.id === Number(key));
-    if (
-      Object.prototype.hasOwnProperty.call(orchardStore.cart, key) &&
-      orchardStore.cart[key] > 0 &&
-      foundFruit
-    ) {
-      cartItems.push({
-        fruit: foundFruit,
-        text: foundFruit.name,
-        total: orchardStore.cart[key]
-      } as CartItem);
-    }
-  }
-  return cartItems;
-});
+function showCartModal(): void {
+  modal.open(CartContents, 'Cart', null);
+}
 </script>
 <template>
   <div class="top-bar has-background-warning">
     <div
       class="p-3 is-flex is-flex-direction-row is-justify-content-space-between is-align-items-center"
     >
-      <button class="button is-round is-warning is-ghost">
+      <button @click="showCartModal" class="button is-round is-warning is-ghost">
         <span class="icon">
           <i class="fa fa-cart-shopping"></i>
         </span>
