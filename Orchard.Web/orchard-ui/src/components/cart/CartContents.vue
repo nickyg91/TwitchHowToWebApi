@@ -23,6 +23,11 @@ const cartItems = computed<CartItem[]>(() => {
   }
   return cartItems;
 });
+
+async function removeFromCart(id: number): Promise<void> {
+  const totalToRemove = orchardStore.cart[id] * -1;
+  await orchardStore.updateCart(id, totalToRemove);
+}
 </script>
 <template>
   <div
@@ -37,7 +42,7 @@ const cartItems = computed<CartItem[]>(() => {
       {{ item.total }}
     </div>
     <div>
-      <button class="button is-danger is-round">
+      <button @click="removeFromCart(item.fruit.id)" class="button is-danger is-round">
         <span class="icon">
           <i class="fa fa-remove"></i>
         </span>
