@@ -1,7 +1,8 @@
 import type { RouteLocationRaw } from 'vue-router';
 
-export class MenuItem {
+export abstract class MenuItem {
   text!: string;
   route!: RouteLocationRaw;
   icon?: string | null;
+  action?: (item: MenuItem) => {};
 }

@@ -141,5 +141,15 @@ export const useOrchardStore = defineStore('orchardStore', () => {
     }
   }
 
-  return { createAccount, logIn, user, token, refreshToken, getProducts, cart, updateCart };
+  return {
+    createAccount,
+    logIn,
+    user,
+    token,
+    refreshToken,
+    getProducts,
+    cart,
+    updateCart,
+    products
+  };
 });
