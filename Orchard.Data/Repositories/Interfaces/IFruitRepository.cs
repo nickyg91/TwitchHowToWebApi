@@ -12,4 +12,5 @@ public interface IFruitRepository
     IEnumerable<Fruit> SearchFruitByNameOrCountryOfOrigin(string nameOrCountryOfOrigin);
     Task<bool> UpdateFruit(Fruit fruit);
     Task<bool> DoesSkuNumberExist(string skuNumber);
+    Task<(int totalFruit, int totalPages)> GetTotalPagesAndTotalFruit(int pageSize);
 }

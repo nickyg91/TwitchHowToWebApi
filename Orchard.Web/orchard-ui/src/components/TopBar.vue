@@ -4,6 +4,7 @@ import { MenuItem } from './dropdown-menu/models/menu-item.model';
 import DropdownMenu from './dropdown-menu/DropdownMenu.vue';
 import useModal from './modal/modal.store';
 import CartContents from './cart/CartContents.vue';
+import SearchBar from './SearchBar.vue';
 const orchardStore = useOrchardStore();
 const modal = useModal();
 
@@ -38,14 +39,14 @@ function showCartModal(): void {
 <template>
   <div class="top-bar has-background-warning">
     <div
-      class="p-3 is-flex is-flex-direction-row is-justify-content-space-between is-align-items-center"
+      class="p-3 is-flex is-flex-direction-row is-flex-shrink-2 is-justify-content-space-between is-align-items-center"
     >
       <button @click="showCartModal" class="button is-round is-warning is-ghost">
         <span class="icon">
           <i class="fa fa-cart-shopping"></i>
         </span>
       </button>
-      <div class="">Hello {{ orchardStore.user?.firstName }}!</div>
+      <SearchBar />
       <DropdownMenu :menu-items="menuItems" :icon-class="'fa fa-user'" />
     </div>
   </div>

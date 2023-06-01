@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Orchard.Data.Entities;
 using Orchard.Models;
 using Orchard.Services.Domain;
 
@@ -18,9 +19,9 @@ public class FruitController : ControllerBase
     }
 
     [HttpGet("page/{page}/size/{size}")]
-    public List<FruitModel> GetAllFruits(int page, int size)
+    public async Task<PaginatedFruitModel> GetAllFruits(int page, int size)
     {
-        return _orchardFruitService.GetPaginatedFruit(page, size);
+        return await _orchardFruitService.GetPaginatedFruit(page, size);
     }
     
     [HttpGet("{id:int}")]
@@ -35,8 +36,8 @@ public class FruitController : ControllerBase
         return _orchardFruitService.GetAllFruit();
     }
     
-    [HttpGet("search/{query}")]
-    public List<FruitModel> DeleteFruit(string query)
+    [HttpGet("search/{query}/page/{pageNumber}/per-page/{perPage}")]
+    public List<FruitModel> SearchFruit(string query, int pageNumber, int perPage)
     {
         return _orchardFruitService.SearchFruit(query);
     }

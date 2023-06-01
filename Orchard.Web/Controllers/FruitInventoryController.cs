@@ -41,4 +41,22 @@ public class FruitInventoryController : ControllerBase
     {
         return _fruitInventoryManagementService.GetUnarchivedFruit();
     }
+    
+    [HttpGet("seed"), AllowAnonymous]
+    public async Task Seed()
+    {
+        var totalToMake = 1000;
+        var tasks = new List<Task>();
+        for (int i = 0; i < totalToMake; i++)
+        {
+            var fruit = new FruitModel
+            {
+                Name = $"Test{i}",
+                SkuNumber = i.ToString(),
+                CountryOfOrigin = "USA",
+                PiecesInInventory = 100
+            };
+            await _fruitInventoryManagementService.AddFruit(fruit);
+        }
+    }
 }

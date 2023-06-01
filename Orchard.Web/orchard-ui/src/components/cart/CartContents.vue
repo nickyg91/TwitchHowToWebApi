@@ -28,25 +28,35 @@ async function removeFromCart(id: number): Promise<void> {
   const totalToRemove = orchardStore.cart[id] * -1;
   await orchardStore.updateCart(id, totalToRemove);
 }
+const noItems = 'There are no items in your cart!';
 </script>
 <template>
-  <div
-    v-for="item in cartItems"
-    :key="item.fruit.id"
-    class="p-2 is-flex is-flex-direction-row is-justify-content-space-between"
-  >
-    <div>
-      {{ item.text }}
+  <div>
+    <div v-if="cartItems.length > 0">
+      <div
+        v-for="item in cartItems"
+        :key="item.fruit.id"
+        class="p-2 is-flex is-flex-direction-row is-justify-content-space-between"
+      >
+        <div>
+          {{ item.text }}
+        </div>
+        <div>
+          {{ item.total }}
+        </div>
+        <div>
+          <button @click="removeFromCart(item.fruit.id)" class="button is-danger is-round">
+            <span class="icon">
+              <i class="fa fa-remove"></i>
+            </span>
+          </button>
+        </div>
+      </div>
     </div>
-    <div>
-      {{ item.total }}
-    </div>
-    <div>
-      <button @click="removeFromCart(item.fruit.id)" class="button is-danger is-round">
-        <span class="icon">
-          <i class="fa fa-remove"></i>
-        </span>
-      </button>
+    <div class="has-text-centered" v-else>
+      <p class="is-size-4">
+        {{ noItems }}
+      </p>
     </div>
   </div>
 </template>

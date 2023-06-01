@@ -70,4 +70,11 @@ public class FruitRepository : IFruitRepository
     {
         return await _ctx.Fruit.Select(x => x.SkuNumber).AnyAsync(x => x == skuNumber);
     }
+
+    public async Task<(int totalFruit, int totalPages)> GetTotalPagesAndTotalFruit(int pageSize)
+    {
+        var totalFruit = await _ctx.Fruit.CountAsync();
+        var totalPages = totalFruit / pageSize;
+        return (totalFruit, totalPages);
+    }
 }

@@ -1,5 +1,4 @@
 using AutoMapper;
-using Orchard.Data.Entities;
 using Orchard.Data.Repositories.Interfaces;
 using Orchard.Models;
 
@@ -37,15 +36,22 @@ public class OrchardFruitService : IOrchardFruitService
         return new List<FruitModel>();
     }
 
-    public List<FruitModel> GetPaginatedFruit(int pageNumber, int pageSize)
+    public async Task<PaginatedFruitModel> GetPaginatedFruit(int pageNumber, int pageSize)
     {
         var paginatedFruit = _fruitRepository.GetAllFruitPaginated(pageNumber, pageSize);
+        var paginationDetails = await _fruitRepository.GetTotalPagesAndTotalFruit(pageSize);
+        
         if (paginatedFruit.Any())
         {
-            return _mapper.Map<List<FruitModel>>(paginatedFruit);
+            var fruit = _mapper.Map<List<FruitModel>>(paginatedFruit);
+            return new PaginatedFruitModel
+            {
+                Fruit = fruit,
+                TotalFruit = paginationDetails.totalFruit,
+                TotalPages = paginationDetails.totalPages,
+            };
         }
-
-        return new List<FruitModel>();
+        return new PaginatedFruitModel();
     }
 
     public async Task<FruitModel?> GetFruitById(int id)

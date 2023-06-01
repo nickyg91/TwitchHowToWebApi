@@ -3,10 +3,11 @@ import { axiosInstance, setToken } from '@/shared/axios-config';
 import type { Cart } from '@/shared/cart/cart.model';
 import type { IFruit } from '@/shared/models/fruit.interface';
 import type { ILoginResult } from '@/shared/models/login-result.inerface';
+import type { PaginatedFruit } from '@/shared/models/paginated-fruit.model';
 import type { User } from '@/shared/models/user.model';
 import type { CreateAccountModel } from '@/views/account/models/create-account.model';
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 export interface IOrchardStore {
   token?: string | null;
@@ -19,8 +20,9 @@ export const useOrchardStore = defineStore('orchardStore', () => {
   const user = ref<User | null>(null);
   const token = ref<string | null>(null);
   const refreshToken = ref<string | null>(null);
-  const products = ref<IFruit[] | null>(null);
+  const products = ref<PaginatedFruit | null>(null);
   const cart = ref<Cart>({});
+  // const filteredProducts = computed(async () => {});
 
   async function createAccount(account: CreateAccountModel): Promise<boolean> {
     try {
@@ -94,9 +96,9 @@ export const useOrchardStore = defineStore('orchardStore', () => {
     }
   }
 
-  async function getProducts(pageNumber: number, perPage: number): Promise<IFruit[]> {
+  async function getProducts(pageNumber: number, perPage: number): Promise<PaginatedFruit> {
     const fruit = (
-      await axiosInstance.get<IFruit[]>(`api/fruit/page/${pageNumber}/size/${perPage}`)
+      await axiosInstance.get<PaginatedFruit>(`api/fruit/page/${pageNumber}/size/${perPage}`)
     ).data;
     products.value = fruit;
     return products.value;
@@ -138,6 +140,22 @@ export const useOrchardStore = defineStore('orchardStore', () => {
         id: null
       });
       cart.value = previousCart;
+    }
+  }
+
+  async function search(searchQuery: string): Promise<IFruit[]> {
+    try {
+      return [];
+    } catch (error) {
+      notys.notify({
+        autoClose: true,
+        duration: 2,
+        isLight: false,
+        message: 'Unable to search products!',
+        title: 'Error Searching Products',
+        type: 'danger'
+      });
+      return [];
     }
   }
 
