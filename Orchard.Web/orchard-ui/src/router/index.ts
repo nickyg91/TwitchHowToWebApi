@@ -33,7 +33,14 @@ const router = createRouter({
     {
       path: '/orchard',
       name: 'orchard',
-      component: FruitList
+      component: FruitList,
+      beforeEnter: () => {
+        const orchardStore = useOrchardStore();
+        if (!orchardStore.token) {
+          return '/log-in';
+        }
+        return true;
+      }
     }
   ] as RouteRecordRaw[]
 });
