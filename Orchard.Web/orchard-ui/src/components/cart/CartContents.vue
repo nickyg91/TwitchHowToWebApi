@@ -5,10 +5,10 @@ import { computed } from 'vue';
 
 const orchardStore = useOrchardStore();
 const cartItems = computed<CartItem[]>(() => {
-  const fruit = orchardStore.products;
+  const products = orchardStore.products;
   const cartItems: CartItem[] = [];
   for (const key in orchardStore.cart) {
-    const foundFruit = fruit?.find((x) => x.id === Number(key));
+    const foundFruit = products?.fruit?.find((x) => x.id === Number(key));
     if (
       Object.prototype.hasOwnProperty.call(orchardStore.cart, key) &&
       orchardStore.cart[key] > 0 &&

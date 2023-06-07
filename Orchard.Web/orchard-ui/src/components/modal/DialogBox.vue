@@ -24,6 +24,7 @@
             v-bind:key="index"
             v-bind:class="action.classes.join(' ')"
             v-for="(action, index) in modalState.actions"
+            @click="action.callback"
           >
             {{ action.label }}
           </button>
@@ -34,13 +35,11 @@
 </template>
 
 <script setup lang="ts">
-import { effect } from 'vue';
 import { storeToRefs } from 'pinia';
 import useModal from '@/components/modal/modal.store';
 
 const modal = useModal();
 
-effect(() => {});
 // convert all state properties to reactive references to be used on view
 const { modalState } = storeToRefs(modal);
 </script>

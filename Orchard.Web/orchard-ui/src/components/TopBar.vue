@@ -5,7 +5,9 @@ import DropdownMenu from './dropdown-menu/DropdownMenu.vue';
 import useModal from './modal/modal.store';
 import CartContents from './cart/CartContents.vue';
 import SearchBar from './SearchBar.vue';
+import useNotifications from './notification/state';
 const orchardStore = useOrchardStore();
+const notifications = useNotifications();
 const modal = useModal();
 
 const menuItems: MenuItem[] = [
@@ -33,7 +35,35 @@ const menuItems: MenuItem[] = [
 ];
 
 function showCartModal(): void {
-  modal.open(CartContents, 'Cart', null);
+  modal.open(CartContents, 'Cart', [
+    {
+      classes: ['button', 'is-primary', 'is-fullwidth'],
+      label: 'Check out',
+      callback: async () => {
+        try {
+          await orchardStore.checkOut();
+          notifications.notify({
+            autoClose: true,
+            duration: 2,
+            isLight: false,
+            message: 'Your order was submitted. An email will be sent shortly.',
+            title: 'Order succeeded!',
+            type: 'success'
+          });
+          modal.close();
+        } catch (error) {
+          notifications.notify({
+            autoClose: true,
+            duration: 2,
+            isLight: false,
+            message: 'An error occurred while submitting your order.',
+            title: 'Order failed',
+            type: 'danger'
+          });
+        }
+      }
+    }
+  ]);
 }
 </script>
 <template>

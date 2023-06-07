@@ -1,13 +1,16 @@
 import useNotifications from '@/components/notification/state';
 import { axiosInstance, setToken } from '@/shared/axios-config';
 import type { Cart } from '@/shared/cart/cart.model';
+import { OrderStatus } from '@/shared/enums/order-status.enum';
+import type { IBasketFruit } from '@/shared/interfaces/basket-fruit.interface';
+import type { IBasketModel } from '@/shared/interfaces/basket.interface';
 import type { IFruit } from '@/shared/models/fruit.interface';
 import type { ILoginResult } from '@/shared/models/login-result.inerface';
 import type { PaginatedFruit } from '@/shared/models/paginated-fruit.model';
 import type { User } from '@/shared/models/user.model';
 import type { CreateAccountModel } from '@/views/account/models/create-account.model';
 import { defineStore } from 'pinia';
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 
 export interface IOrchardStore {
   token?: string | null;
@@ -22,7 +25,6 @@ export const useOrchardStore = defineStore('orchardStore', () => {
   const refreshToken = ref<string | null>(null);
   const products = ref<PaginatedFruit | null>(null);
   const cart = ref<Cart>({});
-  // const filteredProducts = computed(async () => {});
 
   async function createAccount(account: CreateAccountModel): Promise<boolean> {
     try {
@@ -143,6 +145,25 @@ export const useOrchardStore = defineStore('orchardStore', () => {
     }
   }
 
+  async function checkOut(): Promise<IBasketModel> {
+    const fruit: IBasketFruit[] = [];
+    for (const key in cart.value) {
+      if (Object.prototype.hasOwnProperty.call(cart.value, key)) {
+        const element = cart.value[key];
+        fruit.push({
+          amount: element,
+          fruitId: Number(key)
+        });
+      }
+    }
+    return (
+      await axiosInstance.post<IBasketModel>('api/basket/submit', {
+        fruit: fruit,
+        orderStatus: OrderStatus.Submitted
+      } as IBasketModel)
+    ).data;
+  }
+
   async function search(searchQuery: string): Promise<IFruit[]> {
     try {
       return [];
@@ -160,14 +181,15 @@ export const useOrchardStore = defineStore('orchardStore', () => {
   }
 
   return {
-    createAccount,
-    logIn,
     user,
     token,
     refreshToken,
-    getProducts,
     cart,
+    products,
+    createAccount,
+    logIn,
+    getProducts,
     updateCart,
-    products
+    checkOut
   };
 });
