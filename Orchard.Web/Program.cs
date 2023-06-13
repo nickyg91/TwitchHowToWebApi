@@ -1,5 +1,6 @@
 using System.Text;
 using AutoMapper.EquivalencyExpression;
+using Grpc.Net.Client;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -11,11 +12,11 @@ using Orchard.Data.Cache;
 using Orchard.Data.Contexts;
 using Orchard.Data.Repositories.Implementations;
 using Orchard.Data.Repositories.Interfaces;
+using Orchard.Grpc;
 using Orchard.Models.Authentication;
 using Orchard.Models.Mappers;
 using Orchard.Services.Domain;
 using Orchard.Web.Authentication;
-using Orchard.Web.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -83,10 +84,18 @@ builder.Services
     .AddTransient<IEmailService, EmailService>((_) => 
         new EmailService(settings.SmtpSettings, environmentUrl));
 
-builder.Services.AddAutoMapper((settings) =>
+builder.Services.AddTransient<GrpcChannel>((_) => GrpcChannel.ForAddress("https://localhost:7195"));
+
+builder.Services.AddTransient<Orders.OrdersClient>((options) =>
 {
-    settings.AddCollectionMappers();
-    settings.AddMaps(
+    var channel = options.GetService<GrpcChannel>();
+    return new Orders.OrdersClient(channel);
+});
+
+builder.Services.AddAutoMapper((config) =>
+{
+    config.AddCollectionMappers();
+    config.AddMaps(
         typeof(FruitProfile), 
         typeof(BasketProfile), 
         typeof(BasketFruitProfile), 

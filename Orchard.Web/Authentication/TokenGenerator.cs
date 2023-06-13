@@ -3,11 +3,11 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Orchard.Core.Configuration;
 using Orchard.Data.Cache;
 using Orchard.Models;
 using Orchard.Models.Authentication;
 using Orchard.Services.Domain;
-using Orchard.Web.Configuration;
 
 namespace Orchard.Web.Authentication;
 

@@ -145,10 +145,10 @@ export const useOrchardStore = defineStore('orchardStore', () => {
     }
   }
 
-  async function checkOut(): Promise<IBasketModel> {
+  async function checkOut(): Promise<void> {
     const fruit: IBasketFruit[] = [];
     for (const key in cart.value) {
-      if (Object.prototype.hasOwnProperty.call(cart.value, key)) {
+      if (Object.prototype.hasOwnProperty.call(cart.value, key) && cart.value[key] > 0) {
         const element = cart.value[key];
         fruit.push({
           amount: element,
@@ -156,12 +156,13 @@ export const useOrchardStore = defineStore('orchardStore', () => {
         });
       }
     }
-    return (
-      await axiosInstance.post<IBasketModel>('api/basket/submit', {
-        fruit: fruit,
-        orderStatus: OrderStatus.Submitted
-      } as IBasketModel)
-    ).data;
+    await axiosInstance.post<IBasketModel>('api/basket/submit', {
+      fruit: fruit
+    } as IBasketModel);
+  }
+
+  function resetCart(): void {
+    cart.value = {};
   }
 
   async function search(searchQuery: string): Promise<IFruit[]> {
@@ -190,6 +191,7 @@ export const useOrchardStore = defineStore('orchardStore', () => {
     logIn,
     getProducts,
     updateCart,
-    checkOut
+    checkOut,
+    resetCart
   };
 });

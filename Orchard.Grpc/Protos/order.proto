@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+option csharp_namespace = "Orchard.Grpc";
+
+package orders;
+
+service Orders {
+  rpc SubmitOrder(OrderRequest) returns (OrderResponse);
+  rpc CheckOrderStatus(CheckOrderRequest) returns (CheckOrderResponse);
+}
+
+enum OrderStatus {
+    Unsubmitted = 0;
+    Submitted = 1;
+    Confirmed = 2;
+    Cancelled = 3;
+    Completed = 4;
+    Shipped = 5;
+    Delayed = 6;
+    ReturnRequested = 7;
+    Returned = 8;
+}
+
+message OrderRequest {
+  optional int32 UserId = 1;
+  message BasketFruit {
+    int32 FruitId = 1;
+    int32 Amount = 2;
+  }
+  repeated BasketFruit Fruit = 2;
+}
+
+message OrderResponse {
+  int32 Id = 1;
+  OrderStatus OrderStatus = 2;
+}
+
+message CheckOrderRequest {
+  int32 Id = 1;
+}
+
+message CheckOrderResponse {
+  int32 Id = 1;
+  OrderStatus OrderStatus = 2;
+}

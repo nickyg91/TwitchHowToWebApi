@@ -22,10 +22,11 @@ public class OrchardService : IOrchardService
         _basketRepository = basketRepository;
     }
 
-    public async Task<BasketModel> SubmitOrder(BasketModel model)
+    public async Task<BasketModel> SubmitOrder(BasketModel model, int? userId)
     {
         model.OrderStatus = OrderStatus.Submitted;
         var dbMappedBasket = _mapper.Map<BasketModel, Basket>(model);
+        dbMappedBasket.UserId = userId;
         dbMappedBasket = await _basketRepository.SubmitBasketOrder(dbMappedBasket);
         return _mapper.Map<Basket, BasketModel>(dbMappedBasket);
     }

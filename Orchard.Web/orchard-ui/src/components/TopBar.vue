@@ -6,6 +6,7 @@ import useModal from './modal/modal.store';
 import CartContents from './cart/CartContents.vue';
 import SearchBar from './SearchBar.vue';
 import useNotifications from './notification/state';
+import type { Cart } from '@/shared/cart/cart.model';
 const orchardStore = useOrchardStore();
 const notifications = useNotifications();
 const modal = useModal();
@@ -40,6 +41,12 @@ function showCartModal(): void {
       classes: ['button', 'is-primary', 'is-fullwidth'],
       label: 'Check out',
       callback: async () => {
+        const hasNoFruit =
+          Object.keys(orchardStore.cart).filter((x) => orchardStore.cart[Number(x)] > 0).length ===
+          0;
+        if (hasNoFruit) {
+          return;
+        }
         try {
           await orchardStore.checkOut();
           notifications.notify({
@@ -51,6 +58,7 @@ function showCartModal(): void {
             type: 'success'
           });
           modal.close();
+          orchardStore.resetCart();
         } catch (error) {
           notifications.notify({
             autoClose: true,

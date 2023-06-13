@@ -1,4 +1,4 @@
-namespace Orchard.Web.Configuration;
+namespace Orchard.Core.Configuration;
 
 public class JwtSettings
 {
