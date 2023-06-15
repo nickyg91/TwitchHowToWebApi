@@ -3,4 +3,5 @@ export interface IBasketFruit {
   basketId?: number | null;
   fruitId: number | null;
   amount: number | null;
+  fruitName?: string;
 }

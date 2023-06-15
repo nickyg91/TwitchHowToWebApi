@@ -32,7 +32,6 @@ public class BasketRepository : IBasketRepository
     {
         return await _ctx.Baskets
             .Include(x => x.Fruit)
-            .ThenInclude(x => x.Fruit)
             .ToListAsync();
     }
 

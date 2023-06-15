@@ -1,5 +1,7 @@
 <script setup lang="ts"></script>
+
 <template>
-  <div>long content</div>
+  <div>orders!</div>
 </template>
+
 <style scoped></style>

@@ -7,4 +7,5 @@ public class BasketModel
     public int Id { get; set; }
     public OrderStatus OrderStatus { get; set; }
     public List<BasketFruitModel> Fruit { get; set; }
+    public int TotalFruit { get; set; }
 }

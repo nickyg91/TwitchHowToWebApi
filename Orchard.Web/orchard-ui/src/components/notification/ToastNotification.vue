@@ -16,9 +16,9 @@ const close = () => {
 };
 
 onMounted(() => {
-  if (props.autoClose) {
+  if (props.autoClose ?? true) {
     startedAt.value = Date.now();
-    delay.value = props.duration * 1000;
+    delay.value = (props.duration ?? 2) * 1000;
     timer.value = setTimeout(close, delay.value);
   }
 });
@@ -32,7 +32,7 @@ const message = computed(() => {
 });
 
 const color = computed(() => {
-  switch (props.type) {
+  switch (props.type ?? 'info') {
     case 'info':
       return 'is-info';
     case 'warning':

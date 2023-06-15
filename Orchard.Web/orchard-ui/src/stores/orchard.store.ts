@@ -1,7 +1,6 @@
 import useNotifications from '@/components/notification/state';
 import { axiosInstance, setToken } from '@/shared/axios-config';
 import type { Cart } from '@/shared/cart/cart.model';
-import { OrderStatus } from '@/shared/enums/order-status.enum';
 import type { IBasketFruit } from '@/shared/interfaces/basket-fruit.interface';
 import type { IBasketModel } from '@/shared/interfaces/basket.interface';
 import type { IFruit } from '@/shared/models/fruit.interface';

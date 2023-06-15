@@ -6,8 +6,11 @@ import { ref } from 'vue';
 defineProps<{ menuItems: T[]; iconClass: string }>();
 
 const showMenu = ref(false);
-function onBlur() {
-  showMenu.value = false;
+function onBlur(event: FocusEvent) {
+  const element = event.relatedTarget as HTMLElement;
+  if (!element || !element.attributes.getNamedItem('href')) {
+    showMenu.value = false;
+  }
 }
 
 function onClick() {
@@ -27,7 +30,11 @@ function onClick() {
       <div class="dropdown-content">
         <div class="menu has-background-black">
           <ul class="menu-list">
-            <li v-for="(item, index) in menuItems" v-bind:key="index">
+            <li
+              @click="$event.stopImmediatePropagation()"
+              v-for="(item, index) in menuItems"
+              v-bind:key="index"
+            >
               <slot>
                 <RouterLink
                   v-if="item.route"

@@ -16,6 +16,7 @@ using Orchard.Grpc;
 using Orchard.Models.Authentication;
 using Orchard.Models.Mappers;
 using Orchard.Services.Domain;
+using Orchard.Web.ApplicationServices;
 using Orchard.Web.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -80,6 +81,8 @@ builder.Services.AddScoped<IOrchardFruitService, OrchardFruitService>();
 builder.Services.AddScoped<IFruitInventoryManagementService, FruitInventoryManagementService>();
 builder.Services.AddTransient<TokenGenerator>();
 builder.Services.AddSingleton<PasswordHashService>();
+builder.Services.AddScoped<IOrdersApplicationService, OrdersApplicationService>();
+
 builder.Services
     .AddTransient<IEmailService, EmailService>((_) => 
         new EmailService(settings.SmtpSettings, environmentUrl));

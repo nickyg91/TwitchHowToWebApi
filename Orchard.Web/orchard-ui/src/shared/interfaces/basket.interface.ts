@@ -5,4 +5,5 @@ export interface IBasketModel {
   id?: number | null;
   orderStatus: OrderStatus | null;
   fruit: IBasketFruit[] | null;
+  totalFruit: number;
 }

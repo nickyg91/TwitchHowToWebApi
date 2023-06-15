@@ -6,30 +6,28 @@ import useModal from './modal/modal.store';
 import CartContents from './cart/CartContents.vue';
 import SearchBar from './SearchBar.vue';
 import useNotifications from './notification/state';
-import type { Cart } from '@/shared/cart/cart.model';
 const orchardStore = useOrchardStore();
 const notifications = useNotifications();
 const modal = useModal();
 
 const menuItems: MenuItem[] = [
   {
-    route: {
-      path: '/account/settings'
-    },
+    route: '/orchard',
+    text: 'Shop',
+    icon: 'fa fa-apple-whole'
+  },
+  {
+    route: '/account/settings',
     text: 'Settings',
     icon: 'fa fa-gear'
   },
   {
-    route: {
-      path: '/account/orders'
-    },
+    route: '/account/orders',
     text: 'Orders',
     icon: 'fa-solid fa-bag-shopping'
   },
   {
-    route: {
-      path: '/logout'
-    },
+    route: '/logout',
     text: 'Log Out',
     icon: 'fa-solid fa-person-through-window'
   }

@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Orchard.Data.Entities;
 using Orchard.Models;
 using Orchard.Services.Domain;
 

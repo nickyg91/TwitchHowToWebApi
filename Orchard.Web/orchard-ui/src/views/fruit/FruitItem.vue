@@ -27,7 +27,7 @@ function removeFromCart(id: number) {
         {{ fruit.name }}
       </p>
       <p class="subtitle">{{ fruit.skuNumber }}</p>
-      <BadgeCounter :total="currentTotalInCart" />
+      <BadgeCounter :total="Number(currentTotalInCart)" />
     </div>
     <footer class="is-flex is-flex-direction-row is-justify-content-space-evenly card-footer p-2">
       <div class="card-footer-item">

@@ -12,6 +12,7 @@ using Orchard.Data.Repositories.Interfaces;
 using Orchard.Grpc.Services;
 using Orchard.Models.Mappers;
 using Orchard.Services.Domain;
+using Orchard.Services.Domain.Orders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +34,7 @@ builder.Services.AddSingleton<ICacheService, CacheService>();
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 builder.Services.AddScoped<IFruitRepository, FruitRepository>();
 builder.Services.AddScoped<IOrchardService, OrchardService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 builder.Services.AddDbContext<OrchardDbContext>((optionsAction) =>
 {

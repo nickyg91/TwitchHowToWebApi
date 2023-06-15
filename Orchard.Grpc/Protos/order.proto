@@ -7,6 +7,9 @@ package orders;
 service Orders {
   rpc SubmitOrder(OrderRequest) returns (OrderResponse);
   rpc CheckOrderStatus(CheckOrderRequest) returns (CheckOrderResponse);
+  rpc CancelOrder(CancelOrderRequest) returns (CancelOrderResponse);
+  rpc GetOrdersForUser(UserOrdersRequest) returns (UserOrdersResponse);
+  rpc GetMoreOrderInfo(MoreOrderDetailsRequest) returns (MoreOrderDetailsResponse);
 }
 
 enum OrderStatus {
@@ -21,12 +24,15 @@ enum OrderStatus {
     Returned = 8;
 }
 
+message BasketFruit {
+  int32 FruitId = 1;
+  int32 Amount = 2;
+  int32 BasketId = 3;
+  string Name = 4;
+}
+
 message OrderRequest {
   optional int32 UserId = 1;
-  message BasketFruit {
-    int32 FruitId = 1;
-    int32 Amount = 2;
-  }
   repeated BasketFruit Fruit = 2;
 }
 
@@ -37,9 +43,42 @@ message OrderResponse {
 
 message CheckOrderRequest {
   int32 Id = 1;
+  int32 UserId = 2;
 }
 
 message CheckOrderResponse {
   int32 Id = 1;
   OrderStatus OrderStatus = 2;
+}
+
+message CancelOrderRequest {
+  int32 OrderId = 1;
+  int32 UserId = 2;
+}
+
+message CancelOrderResponse {
+  bool IsCancelled = 1;
+}
+
+message UserOrdersRequest {
+  int32 UserId = 1;
+}
+
+message UserOrdersResponse {
+  message Order
+  {
+    int32 Id = 1;
+    OrderStatus Status = 2;
+    int32 AmountOfFruit = 3;
+  }
+  repeated Order Orders = 1;
+}
+
+message MoreOrderDetailsRequest {
+  int32 Id = 1;
+  int32 UserId = 2;
+}
+
+message MoreOrderDetailsResponse {
+  repeated BasketFruit Fruit = 1;
 }
