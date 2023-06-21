@@ -1,3 +1,4 @@
+using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using Orchard.Models;
 using Orchard.Services.Domain.Orders;
@@ -58,7 +59,8 @@ public class OrdersService : Orders.OrdersBase
                 {
                     Id = x.Id,
                     Status = (OrderStatus)x.OrderStatus,
-                    AmountOfFruit = x.Fruit.Count
+                    AmountOfFruit = x.Fruit.Count,
+                    CreatedAtUtc = x.CreatedAtUtc.ToTimestamp()
                 })
             }
         };
@@ -75,7 +77,8 @@ public class OrdersService : Orders.OrdersBase
                 {
                     Amount = x.Amount,
                     FruitId = x.FruitId,
-                    BasketId = x.BasketId
+                    BasketId = x.BasketId,
+                    Name = x.FruitName
                 })
             }
         };

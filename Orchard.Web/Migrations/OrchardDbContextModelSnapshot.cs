@@ -32,7 +32,7 @@ namespace Orchard.Web.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAdUtc")
+                    b.Property<DateTime>("CreatedAtUtc")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at_utc")
@@ -73,7 +73,7 @@ namespace Orchard.Web.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("basket_id");
 
-                    b.Property<DateTime>("CreatedAdUtc")
+                    b.Property<DateTime>("CreatedAtUtc")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at_utc")
@@ -108,7 +108,7 @@ namespace Orchard.Web.Migrations
                         .HasColumnType("character varying(128)")
                         .HasColumnName("country_of_origin");
 
-                    b.Property<DateTime>("CreatedAdUtc")
+                    b.Property<DateTime>("CreatedAtUtc")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at_utc")
@@ -158,7 +158,7 @@ namespace Orchard.Web.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("birth_date");
 
-                    b.Property<DateTime>("CreatedAdUtc")
+                    b.Property<DateTime>("CreatedAtUtc")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at_utc")

@@ -7,7 +7,7 @@ import { reactive } from 'vue';
 export interface IOrchardState {
   orders: IBasketModel[];
 }
-export const useOrchardStore = defineStore('ordersStore', () => {
+export const useOrderStore = defineStore('ordersStore', () => {
   const state = reactive({} as IOrchardState);
   const noty = useNotifications();
 

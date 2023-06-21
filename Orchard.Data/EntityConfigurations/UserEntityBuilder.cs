@@ -41,7 +41,7 @@ public class UserEntityBuilder : IEntityTypeConfiguration<User>
             .HasColumnName("email_verification_guid")
             .HasDefaultValueSql("gen_random_uuid()");
         
-        builder.Property(x => x.CreatedAdUtc)
+        builder.Property(x => x.CreatedAtUtc)
             .HasColumnName("created_at_utc")
             .HasDefaultValueSql("timezone('UTC', now())");
 

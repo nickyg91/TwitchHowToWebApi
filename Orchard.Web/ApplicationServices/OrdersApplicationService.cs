@@ -67,7 +67,8 @@ public class OrdersApplicationService : IOrdersApplicationService
         {
             Id = x.Id,
             OrderStatus = (OrderStatus)x.Status,
-            TotalFruit = x.AmountOfFruit
+            TotalFruit = x.AmountOfFruit,
+            CreatedAtUtc = x.CreatedAtUtc.ToDateTime() 
         }).ToList();
         return orders;
     }

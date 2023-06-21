@@ -19,6 +19,6 @@ public class BasketFruitEntityBuilder : IEntityTypeConfiguration<BasketFruit>
             .HasForeignKey(x => x.BasketId)
             .HasConstraintName("fk_basket_basket_fruit")
             .IsRequired();
-        builder.Property(x => x.CreatedAdUtc).HasColumnName("created_at_utc").HasDefaultValueSql("timezone('UTC', now())");
+        builder.Property(x => x.CreatedAtUtc).HasColumnName("created_at_utc").HasDefaultValueSql("timezone('UTC', now())");
     }
 }

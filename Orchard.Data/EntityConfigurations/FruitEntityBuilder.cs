@@ -31,7 +31,7 @@ public class FruitEntityBuilder : IEntityTypeConfiguration<Fruit>
             .HasColumnName("is_archived")
             .HasDefaultValue(false);
         
-        builder.Property(x => x.CreatedAdUtc)
+        builder.Property(x => x.CreatedAtUtc)
             .HasColumnName("created_at_utc")
             .HasDefaultValueSql("timezone('UTC', now())");
     }

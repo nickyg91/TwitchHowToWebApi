@@ -28,7 +28,7 @@ function onClick() {
     </div>
     <div class="dropdown-menu">
       <div class="dropdown-content">
-        <div class="menu has-background-black">
+        <div class="menu has-background-white">
           <ul class="menu-list">
             <li
               @click="$event.stopImmediatePropagation()"

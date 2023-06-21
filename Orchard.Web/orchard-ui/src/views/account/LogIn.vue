@@ -42,7 +42,7 @@ async function submitLogin(): Promise<void> {
   <div class="container is-flex is-justify-content-center is-flex-direction-row">
     <div class="login-container">
       <div class="p-2 card">
-        <header class="card-header has-text-centered">
+        <header class="has-text-centered">
           <p class="card-header-title is-centered is-size-2">Log In</p>
         </header>
         <div class="card-content">

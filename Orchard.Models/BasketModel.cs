@@ -8,4 +8,5 @@ public class BasketModel
     public OrderStatus OrderStatus { get; set; }
     public List<BasketFruitModel> Fruit { get; set; }
     public int TotalFruit { get; set; }
+    public DateTime CreatedAtUtc { get; set; }
 }

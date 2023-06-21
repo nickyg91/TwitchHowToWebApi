@@ -24,7 +24,7 @@ public class BasketEntityBuilder : IEntityTypeConfiguration<Basket>
             .IsRequired()
             .HasDefaultValue(OrderStatus.Unsubmitted);
         
-        builder.Property(x => x.CreatedAdUtc)
+        builder.Property(x => x.CreatedAtUtc)
             .HasColumnName("created_at_utc")
             .HasDefaultValueSql("timezone('UTC', now())");
 

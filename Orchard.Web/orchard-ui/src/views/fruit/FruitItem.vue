@@ -23,7 +23,7 @@ function removeFromCart(id: number) {
 <template>
   <div class="card">
     <div class="card-content">
-      <p class="title has-text-white">
+      <p class="title">
         {{ fruit.name }}
       </p>
       <p class="subtitle">{{ fruit.skuNumber }}</p>
