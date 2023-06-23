@@ -6,9 +6,16 @@ import useModal from './modal/modal.store';
 import CartContents from './cart/CartContents.vue';
 import SearchBar from './SearchBar.vue';
 import useNotifications from './notification/state';
+import { computed } from 'vue';
+import { useRouter } from 'vue-router';
 const orchardStore = useOrchardStore();
 const notifications = useNotifications();
 const modal = useModal();
+const router = useRouter();
+
+const showSearchBar = computed(() => {
+  return router.currentRoute.value.name === 'orchard';
+});
 
 const menuItems: MenuItem[] = [
   {
@@ -82,7 +89,7 @@ function showCartModal(): void {
           <i class="fa fa-cart-shopping"></i>
         </span>
       </button>
-      <SearchBar />
+      <SearchBar v-if="showSearchBar" />
       <DropdownMenu :menu-items="menuItems" :icon-class="'fa fa-user'" />
     </div>
   </div>
